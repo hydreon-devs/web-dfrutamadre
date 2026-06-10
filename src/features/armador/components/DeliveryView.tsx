@@ -196,7 +196,7 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
       <div className="bg-white rounded-media border-2 border-linea px-4 py-3.5 mt-6">
         <div className="flex items-center justify-between">
           <span className="font-round font-bold text-cacao-soft">
-            {recogeEnTienda ? "Total a pagar" : "Valor total + domicilio"}
+            {recogeEnTienda ? "Total a pagar" : "El valor total es sin domicilio"}
           </span>
           <span className="font-round font-extrabold text-[1.3rem] text-coral">
             {formatPrecio(total)}
