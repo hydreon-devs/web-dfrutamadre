@@ -18,6 +18,7 @@ interface DeliveryViewProps {
 const PAGOS: { id: MetodoPago; nombre: string; icono: string }[] = [
   { id: "efectivo", nombre: "Efectivo", icono: "💵" },
   { id: "transferencia", nombre: "Transferencia", icono: "📲" },
+  { id: "recoger-en-tienda", nombre: "Recoger en tienda", icono: "🏪" },
 ];
 
 export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: DeliveryViewProps) {
@@ -101,7 +102,7 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
         <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
           Método de pago
         </span>
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 gap-2.5 min-[560px]:grid-cols-3">
           {PAGOS.map((p) => {
             const on = entrega.pago === p.id;
             return (
@@ -118,10 +119,12 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
                 <span className="text-xl" aria-hidden="true">
                   {p.icono}
                 </span>
-                <span className="font-round font-extrabold text-cacao">{p.nombre}</span>
+                <span className="font-round font-extrabold text-cacao text-left leading-tight">
+                  {p.nombre}
+                </span>
                 <span
                   className={cn(
-                    "ml-auto grid place-items-center w-5 h-5 rounded-full border-[2.5px] border-linea bg-white",
+                    "ml-auto grid place-items-center w-5 h-5 flex-none rounded-full border-[2.5px] border-linea bg-white",
                     on && "border-coral",
                   )}
                   aria-hidden="true"
@@ -148,6 +151,23 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
             value={entrega.pagaCon}
             onChange={(e) => set("pagaCon", e.target.value)}
             placeholder="Ej: 50.000 — para llevar el cambio"
+          />
+        </label>
+      )}
+
+{entrega.pago === "recoger-en-tienda" && (
+        <label className="block mb-4">
+          <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
+            Nombre de quien recoge el pedido{" "}
+            <em className="not-italic font-bold text-[.78rem] text-verde-700 bg-verde-tint rounded-full px-2 py-0.5">
+              obligatorio
+            </em>
+          </span>
+          <input
+            className={inputClasses}
+            value={entrega.nombreRecoge}
+            onChange={(e) => set("nombreRecoge", e.target.value)}
+            placeholder="Ej: Juan Pérez"
           />
         </label>
       )}

@@ -45,10 +45,13 @@ export function buildOrderMessage(items: ItemPedido[], entrega: DatosEntrega): s
   L.push(`📍 Dirección: ${entrega.direccion.trim() || "—"}`);
   if (entrega.referencia.trim()) L.push(`🗺️ Referencia: ${entrega.referencia.trim()}`);
 
-  let pagoLine = `💵 Pago: ${entrega.pago === "transferencia" ? "Transferencia" : "Efectivo"}`;
+  let pagoLine = `💵 Pago: ${entrega.pago === "transferencia" ? "Transferencia" : entrega.pago === "recoger-en-tienda" ? "Recoger en tienda" : "Efectivo"}`;
   if (entrega.pago === "efectivo" && entrega.pagaCon.trim()) {
     const monto = Number(entrega.pagaCon.replace(/\D/g, "")) || 0;
     if (monto > 0) pagoLine += ` (pago con ${formatPrecio(monto)})`;
+  }
+  if (entrega.pago === "recoger-en-tienda" && entrega.nombreRecoge.trim()) {
+    pagoLine += ` (recogido por ${entrega.nombreRecoge.trim()})`;
   }
   L.push(pagoLine);
   L.push("");
