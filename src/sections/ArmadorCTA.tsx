@@ -42,7 +42,7 @@ export function ArmadorCTA({ onOpenArmador }: ArmadorCTAProps) {
           />
           <img
             className="relative z-2 w-[clamp(210px,58vw,290px)] drop-shadow-[0_20px_26px_rgb(0_0_0/0.22)] animate-floaty"
-            src="/assets/cup-chocolate.webp"
+            src="/assets/cup-fresas-con-crema.webp"
             alt="Fresas con crema personalizadas"
           />
           {[

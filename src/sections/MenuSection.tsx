@@ -132,7 +132,7 @@ export function MenuSection() {
               >
                 <div className="grid place-items-center aspect-square bg-blush rounded-media overflow-hidden mb-2.5">
                   <img
-                    src="/assets/cup-chocolate.webp"
+                    src="/assets/cup-fresas-con-crema.webp"
                     alt=""
                     className="w-[78%] h-[78%] object-contain drop-shadow-[0_8px_12px_rgb(200_70_95/0.18)]"
                     style={{ transform: `scale(${0.7 + (escalaTamano[t.id] ?? 1) * 0.28})` }}

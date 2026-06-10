@@ -55,7 +55,7 @@ export const ESPECIALES: Especial[] = [
     id: "salpiconada",
     nombre: "Salpiconada",
     desc: "Lecherita, jugo de frutas y una mezcla de piña, mango y papaya.",
-    img: "/assets/cup-fresa-helado.webp",
+    img: "/assets/cup-salpiconada.webp",
     precios: [
       { label: "12 oz", precio: 8000 },
       { label: "Con queso o helado", precio: 12000 },
@@ -67,7 +67,7 @@ export const ESPECIALES: Especial[] = [
     id: "duraznos",
     nombre: "Duraznos con crema",
     desc: "Duraznos en almíbar bañados en crema de la casa.",
-    img: "/assets/cup-salpiconada.webp",
+    img: "/assets/cup-duraznos.webp",
     precios: [
       { label: "12 oz", precio: 18000 },
       { label: "16 oz", precio: 22000 },
