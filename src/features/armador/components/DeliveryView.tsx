@@ -193,11 +193,20 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
         </label>
       )}
 
-      <div className="flex items-center justify-between bg-white rounded-media border-2 border-linea px-4 py-3.5 mt-6">
-        <span className="font-round font-bold text-cacao-soft">Total a pagar</span>
-        <span className="font-round font-extrabold text-[1.3rem] text-coral">
-          {formatPrecio(total)}
-        </span>
+      <div className="bg-white rounded-media border-2 border-linea px-4 py-3.5 mt-6">
+        <div className="flex items-center justify-between">
+          <span className="font-round font-bold text-cacao-soft">
+            {recogeEnTienda ? "Total a pagar" : "Valor total + domicilio"}
+          </span>
+          <span className="font-round font-extrabold text-[1.3rem] text-coral">
+            {formatPrecio(total)}
+          </span>
+        </div>
+        {!recogeEnTienda && (
+          <p className="mt-1 text-[.8rem] text-cacao-soft">
+            El costo del domicilio varía según tu ubicación.
+          </p>
+        )}
       </div>
     </CheckoutShell>
   );
