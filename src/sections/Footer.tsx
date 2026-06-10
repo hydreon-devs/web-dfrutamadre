@@ -21,7 +21,7 @@ export function Footer({ onOpenArmador }: FooterProps) {
   const wa = buildWaUrl(BRAND.telefonoIntl, SALUDO);
 
   return (
-    <footer className="relative text-white pt-23 pb-9 bg-gradient-to-b from-coral to-coral-700">
+    <footer className="relative text-white pt-23 pb-28 min-[720px]:pb-9 bg-gradient-to-b from-coral to-coral-700">
       <div className="absolute inset-x-0 top-0">
         <Drip color="var(--color-crema)" flip />
       </div>
@@ -82,6 +82,26 @@ export function Footer({ onOpenArmador }: FooterProps) {
           </p>
           <p className="text-[.85rem] text-white/70">
             @{BRAND.instagram} · {BRAND.telefonoDisplay} · Girardota, Antioquia
+          </p>
+          <p className="text-[.85rem] text-white/70">
+            Sitio creado por{" "}
+            <a
+              className="font-bold text-white/90 underline underline-offset-2 transition-colors hover:text-white"
+              href="https://hydreon.com.co"
+              target="_blank"
+              rel="noopener"
+            >
+              Hydreon
+            </a>{" "}
+            ·{" "}
+            <a
+              className="inline-flex items-center gap-1 font-bold text-white/90 underline underline-offset-2 transition-colors hover:text-white"
+              href="https://instagram.com/hydreon.co"
+              target="_blank"
+              rel="noopener"
+            >
+              <IconInstagram /> @hydreon.co
+            </a>
           </p>
         </div>
       </div>
