@@ -12,6 +12,7 @@ export const BRAND = {
   telefonoIntl: "573234519204",
   horario: "Martes a Domingo · 2:00 – 8:00 PM",
   cobertura: "Cobertura solo en Girardota",
+  direccion: "Calle 10 N18-5, Girardota",
 } as const;
 
 export interface PrecioEspecial {

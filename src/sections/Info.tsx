@@ -30,7 +30,7 @@ export function Info() {
             <p className="text-cacao-soft leading-normal">
               Domicilios <b className="text-cacao">solo en Girardota</b>
               <br />
-              Antioquia
+              Punto físico: <b className="text-cacao">{BRAND.direccion}</b>
             </p>
           </div>
 
