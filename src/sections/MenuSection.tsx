@@ -132,7 +132,7 @@ export function MenuSection() {
                 className="relative flex flex-col bg-white rounded-card shadow-fm-sm p-3.5 border-2 border-transparent transition-all hover:-translate-y-1 hover:shadow-fm-md hover:border-rosa-soft"
               >
                 {p.tag && (
-                  <Badge variant="green" className="absolute top-5.5 left-5.5 z-3">
+                  <Badge variant="coral" className="absolute top-5.5 left-5.5 z-3">
                     {p.tag}
                   </Badge>
                 )}

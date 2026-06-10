@@ -36,7 +36,6 @@ export const ESPECIALES: Especial[] = [
     desc: "Crema de la casa, fresa, durazno, mermelada de fresa y merengue.",
     img: "/assets/merengon.webp",
     precios: [{ label: "Porción", precio: 15000 }],
-    tag: "La especialidad",
   },
   {
     id: "oblea",
@@ -45,8 +44,8 @@ export const ESPECIALES: Especial[] = [
     img: "/assets/oblea.webp",
     precios: [
       { label: "Individual", precio: 8000 },
-      { label: "Con queso o helado", precio: 15000 },
     ],
+    tag: "Solo en punto físico",
   },
   {
     id: "salpiconada",
