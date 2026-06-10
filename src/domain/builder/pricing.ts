@@ -1,6 +1,6 @@
-import type { Paso, Producto, Seleccion } from "./types";
+import type { ItemPedido, Paso, Producto, Seleccion } from "./types";
 
-/** Total de un ítem según el producto y la selección. Función pura. */
+/** Total de un ítem configurable (wizard) según el producto y la selección. Función pura. */
 export function calcularPrecio(producto: Producto, seleccion: Seleccion): number {
   return producto.pasos.reduce((total, paso) => {
     const elegidas = seleccion[paso.id] ?? [];
@@ -11,6 +11,21 @@ export function calcularPrecio(producto: Producto, seleccion: Seleccion): number
     const extras = Math.max(0, elegidas.length - paso.incluidos);
     return total + extras * paso.costoExtra;
   }, 0);
+}
+
+/** Total de un ítem directo: precio × cantidad. */
+export function calcularPrecioDirecto(precio: number, cantidad: number): number {
+  return precio * cantidad;
+}
+
+/** Subtotal de un ítem (configurable o directo). Ya calculado, se guarda en el estado. */
+export function subtotalItem(item: ItemPedido): number {
+  return item.subtotal;
+}
+
+/** Total del pedido: suma de subtotales de todos los ítems. */
+export function totalPedido(items: ItemPedido[]): number {
+  return items.reduce((acc, item) => acc + item.subtotal, 0);
 }
 
 /** Cantidad de opciones extra (por encima de las incluidas) en un paso multi. */

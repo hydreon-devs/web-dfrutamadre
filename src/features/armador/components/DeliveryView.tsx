@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import type { ItemPedido } from "../../../domain/builder/types";
+import { totalPedido } from "../../../domain/builder/pricing";
 import { formatPrecio } from "../../../shared/lib/format";
 import { cn } from "../../../shared/lib/cn";
 import { Button, IconArrow } from "../../../shared/ui";
-import { totalPedido } from "../hooks/usePedido";
 import type { DatosEntrega, MetodoPago } from "../types";
 import { CheckoutShell } from "./CheckoutShell";
 

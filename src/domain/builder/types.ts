@@ -4,6 +4,8 @@
  * escritos a mano; todo sale de estas estructuras.
  */
 
+/* ─────────────── Opciones y pasos ─────────────── */
+
 export interface Opcion {
   id: string;
   label: string;
@@ -40,6 +42,9 @@ export interface PasoMulti extends PasoBase {
 
 export type Paso = PasoSingle | PasoMulti;
 
+/* ─────────────── Productos ─────────────── */
+
+/** Producto configurable (wizard paso a paso): tamaños, toppings, etc. */
 export interface Producto {
   id: string;
   nombre: string;
@@ -48,12 +53,38 @@ export interface Producto {
   pasos: Paso[];
 }
 
+/** Producto directo: precio fijo, se agrega con cantidad. */
+export interface ProductoDirecto {
+  id: string;
+  nombre: string;
+  /** Nombre corto para resúmenes */
+  alias?: string;
+  precio: number;
+}
+
+export type ProductoArmador = Producto | ProductoDirecto;
+
+/* ─────────────── Estado del pedido ─────────────── */
+
 /** ids elegidos por paso, en orden de selección (importa para incluidos/extras) */
 export type Seleccion = Record<string, string[]>;
 
-/** Un ítem ya armado dentro del pedido */
-export interface ItemPedido {
+/** Ítem configurable (wizard): tiene selección paso a paso. */
+export interface ItemPedidoConfigurable {
   id: number;
   productoId: string;
+  tipo: "configurable";
   seleccion: Seleccion;
+  subtotal: number;
 }
+
+/** Ítem directo: precio fijo × cantidad. */
+export interface ItemPedidoDirecto {
+  id: number;
+  productoId: string;
+  tipo: "directo";
+  cantidad: number;
+  subtotal: number;
+}
+
+export type ItemPedido = ItemPedidoConfigurable | ItemPedidoDirecto;

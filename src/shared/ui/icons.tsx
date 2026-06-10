@@ -58,6 +58,12 @@ export const IconPlus = (p: P) => (
   </svg>
 );
 
+export const IconMinus = (p: P) => (
+  <svg {...stroke} strokeWidth={2.6} {...p}>
+    <path d="M5 12h14" />
+  </svg>
+);
+
 export const IconArrow = (p: P) => (
   <svg {...stroke} strokeWidth={2.6} {...p}>
     <path d="M5 12h14M13 6l6 6-6 6" />

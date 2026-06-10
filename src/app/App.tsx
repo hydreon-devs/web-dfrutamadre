@@ -1,8 +1,9 @@
 import { useState } from "react";
-import type { Seleccion } from "../domain/builder/types";
-import { fresasConCrema } from "../domain/menu";
+import type { Producto, Seleccion } from "../domain/builder/types";
+import { productoPorId } from "../domain/menu";
 import { Landing } from "../sections/Landing";
 import { ProductBuilder } from "../features/armador/ProductBuilder";
+import { ProductCatalog } from "../features/armador/ProductCatalog";
 import { CartView } from "../features/armador/components/CartView";
 import { DeliveryView } from "../features/armador/components/DeliveryView";
 import { WhatsAppView } from "../features/armador/components/WhatsAppView";
@@ -11,11 +12,14 @@ import { ENTREGA_INICIAL, type DatosEntrega } from "../features/armador/types";
 import { formatPrecio } from "../shared/lib/format";
 import { WhatsAppFab } from "../shared/ui";
 
-type View = "landing" | "armador" | "cart" | "delivery" | "whatsapp";
+type View = "landing" | "catalog" | "armador" | "cart" | "delivery" | "whatsapp";
 
 export function App() {
   const [view, setView] = useState<View>("landing");
+  /** Si se está editando un ítem configurable, su id; null = modo agregar. */
   const [editId, setEditId] = useState<number | null>(null);
+  /** El producto que se está armando en el wizard. */
+  const [wizardProducto, setWizardProducto] = useState<Producto | null>(null);
   const [entrega, setEntrega] = useState<DatosEntrega>(ENTREGA_INICIAL);
   const pedido = usePedido();
 
@@ -24,26 +28,58 @@ export function App() {
     setView(v);
   };
 
-  const openArmador = () => {
+  /* ── Navegación principal ── */
+
+  const openCatalog = () => {
+    setEditId(null);
+    go("catalog");
+  };
+
+  const startWizard = (producto: Producto) => {
+    setWizardProducto(producto);
     setEditId(null);
     go("armador");
   };
 
   const editItem = (id: number) => {
     setEditId(id);
-    go("armador");
+    const item = pedido.items.find((it) => it.id === id);
+    if (item?.tipo === "configurable") {
+      const prod = productoPorId(item.productoId);
+      if (prod) {
+        setWizardProducto(prod);
+        go("armador");
+      }
+    }
   };
 
   const submitArmador = (seleccion: Seleccion) => {
-    if (editId != null) pedido.actualizar(editId, seleccion);
-    else pedido.agregar(fresasConCrema.id, seleccion);
+    if (editId != null) {
+      pedido.actualizarConfigurable(editId, seleccion);
+    } else if (wizardProducto) {
+      pedido.agregarConfigurable(wizardProducto.id, seleccion);
+    }
     setEditId(null);
+    setWizardProducto(null);
     go("cart");
   };
 
   const armadorBack = () => {
     setEditId(null);
-    setView(pedido.items.length ? "cart" : "landing");
+    setWizardProducto(null);
+    setView(pedido.items.length ? "cart" : "catalog");
+  };
+
+  const updateDirecto = (productoId: string, cantidad: number) => {
+    // Si ya existe en el pedido, actualizarlo; si no, agregarlo
+    const existente = pedido.items.find(
+      (it) => it.tipo === "directo" && it.productoId === productoId,
+    );
+    if (existente) {
+      pedido.actualizarDirecto(existente.id, cantidad);
+    } else {
+      pedido.agregarDirecto(productoId, cantidad);
+    }
   };
 
   const finishPedido = () => {
@@ -52,33 +88,54 @@ export function App() {
     go("landing");
   };
 
-  const itemEnEdicion = editId != null ? pedido.items.find((it) => it.id === editId) : undefined;
+  const itemEnEdicion =
+    editId != null ? pedido.items.find((it) => it.id === editId) : undefined;
+
+  /* ── Render ── */
 
   const renderView = () => {
     switch (view) {
       case "landing":
-        return <Landing onOpenArmador={openArmador} />;
-      case "armador":
+        return <Landing onOpenArmador={openCatalog} />;
+
+      case "catalog":
         return (
+          <ProductCatalog
+            items={pedido.items}
+            onStartWizard={startWizard}
+            onUpdateDirecto={updateDirecto}
+            onVerPedido={() => go("cart")}
+            onBack={() => go("landing")}
+          />
+        );
+
+      case "armador":
+        return wizardProducto ? (
           <ProductBuilder
-            producto={fresasConCrema}
-            initial={itemEnEdicion?.seleccion}
+            producto={wizardProducto}
+            initial={
+              itemEnEdicion?.tipo === "configurable"
+                ? itemEnEdicion.seleccion
+                : undefined
+            }
             editMode={editId != null}
             onBack={armadorBack}
             onSubmit={submitArmador}
           />
-        );
+        ) : null;
+
       case "cart":
         return (
           <CartView
             items={pedido.items}
             onEdit={editItem}
             onRemove={pedido.eliminar}
-            onAddAnother={openArmador}
+            onAddAnother={openCatalog}
             onCheckout={() => go("delivery")}
-            onBack={() => setView("landing")}
+            onBack={() => go("catalog")}
           />
         );
+
       case "delivery":
         return (
           <DeliveryView
@@ -89,6 +146,7 @@ export function App() {
             onSubmit={() => go("whatsapp")}
           />
         );
+
       case "whatsapp":
         return (
           <WhatsAppView
@@ -103,7 +161,7 @@ export function App() {
 
   return (
     <>
-      <div key={view + (editId == null ? "" : `-e${editId}`)} className="view-fade-enter">
+      <div key={view} className="view-fade-enter">
         {renderView()}
       </div>
       {view === "landing" && <WhatsAppFab />}

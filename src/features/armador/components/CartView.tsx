@@ -1,10 +1,28 @@
-import type { ItemPedido } from "../../../domain/builder/types";
-import { desglosarSeleccion } from "../../../domain/builder/pricing";
-import { productoPorId } from "../../../domain/menu";
+import type { ItemPedido, ItemPedidoConfigurable, ItemPedidoDirecto } from "../../../domain/builder/types";
+import { desglosarSeleccion, totalPedido } from "../../../domain/builder/pricing";
+import { productoDirectoPorId, productoPorId } from "../../../domain/menu";
 import { formatPrecio } from "../../../shared/lib/format";
 import { Badge, Button, IconArrow, IconCart, IconEdit, IconPlus, IconTrash } from "../../../shared/ui";
-import { subtotalItem, totalPedido } from "../hooks/usePedido";
 import { CheckoutShell } from "./CheckoutShell";
+
+/* ─────────────── Assets ─────────────── */
+
+const IMG_PRODUCTO: Record<string, string> = {
+  "fresas-con-crema": "/assets/cup-fresas-con-crema.webp",
+  "duraznos-con-crema": "/assets/cup-duraznos.webp",
+  "salpiconada": "/assets/cup-salpiconada.webp",
+  "merengon": "/assets/merengon.webp",
+  "mermelada-fresa": "/assets/mascot-fresa.webp",
+  "vaso-crema": "/assets/mascot-fresa.webp",
+  "chococono": "/assets/mascot-fresa.webp",
+  "agua": "/assets/mascot-fresa.webp",
+};
+
+function itemImg(productoId: string): string {
+  return IMG_PRODUCTO[productoId] ?? "/assets/mascot-fresa.webp";
+}
+
+/* ─────────────── Props ─────────────── */
 
 interface CartViewProps {
   items: ItemPedido[];
@@ -14,6 +32,136 @@ interface CartViewProps {
   onCheckout: () => void;
   onBack: () => void;
 }
+
+/* ─────────────── Ítem configurable ─────────────── */
+
+interface ConfigurableCardProps {
+  item: ItemPedidoConfigurable;
+  index: number;
+  onEdit: (id: number) => void;
+  onRemove: (id: number) => void;
+}
+
+function ConfigurableCard({ item, index, onEdit, onRemove }: ConfigurableCardProps) {
+  const producto = productoPorId(item.productoId);
+  if (!producto) return null;
+  const desglose = desglosarSeleccion(producto, item.seleccion);
+  const base = desglose.find((d) => d.paso.tipo === "single" && d.paso.defineBase);
+  const baseOp = base?.paso.opciones.find((o) => o.id === item.seleccion[base.paso.id]?.[0]);
+
+  return (
+    <article className="flex gap-3.5 bg-white rounded-card shadow-fm-sm p-3.5">
+      <div className="grid place-items-center w-24 h-24 flex-none bg-blush rounded-media overflow-hidden">
+        <img
+          src={itemImg(item.productoId)}
+          alt=""
+          className="w-[82%] h-[82%] object-contain drop-shadow-[0_6px_10px_rgb(200_70_95/0.18)]"
+        />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="font-round font-extrabold text-cacao text-[1.1rem]">
+            {producto.alias ?? producto.nombre} #{index + 1}
+          </h3>
+          <span className="font-round font-extrabold text-coral whitespace-nowrap">
+            {formatPrecio(item.subtotal)}
+          </span>
+        </div>
+        {baseOp && (
+          <p className="text-[.9rem] text-cacao-soft font-bold mb-1.5">
+            {baseOp.label}
+            {baseOp.meta ? ` · ${baseOp.meta}` : ""}
+          </p>
+        )}
+        <dl className="grid gap-0.5 text-[.9rem]">
+          {desglose
+            .filter((d) => !(d.paso.tipo === "single" && d.paso.defineBase))
+            .map((d) => (
+              <div key={d.paso.id} className="flex gap-1.5">
+                <dt className="font-bold text-cacao-soft flex-none">{d.paso.etiqueta}:</dt>
+                <dd className="text-cacao">
+                  {d.labels.length ? d.labels.join(", ") : "—"}
+                  {d.extras > 0 && (
+                    <em className="not-italic text-coral-700 font-bold">
+                      {" "}
+                      +{formatPrecio(d.costoExtras)}
+                    </em>
+                  )}
+                </dd>
+              </div>
+            ))}
+        </dl>
+        <div className="flex gap-2 mt-2.5">
+          <button
+            type="button"
+            onClick={() => onEdit(item.id)}
+            className="inline-flex items-center gap-1.5 font-round font-bold text-[.88rem] text-coral-700 bg-coral-tint px-3 py-1.5 rounded-full transition-colors hover:bg-rosa-soft"
+          >
+            <IconEdit /> Editar
+          </button>
+          <button
+            type="button"
+            onClick={() => onRemove(item.id)}
+            className="inline-flex items-center gap-1.5 font-round font-bold text-[.88rem] text-cacao-soft bg-blush px-3 py-1.5 rounded-full transition-colors hover:bg-rosa-soft hover:text-coral-700"
+          >
+            <IconTrash /> Eliminar
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/* ─────────────── Ítem directo ─────────────── */
+
+interface DirectoCardProps {
+  item: ItemPedidoDirecto;
+  onRemove: (id: number) => void;
+}
+
+function DirectoCard({ item, onRemove }: DirectoCardProps) {
+  const producto = productoDirectoPorId(item.productoId);
+  if (!producto) return null;
+
+  return (
+    <article className="flex gap-3.5 bg-white rounded-card shadow-fm-sm p-3.5">
+      <div className="grid place-items-center w-24 h-24 flex-none bg-blush rounded-media overflow-hidden">
+        <img
+          src={itemImg(item.productoId)}
+          alt=""
+          className="w-[82%] h-[82%] object-contain drop-shadow-[0_6px_10px_rgb(200_70_95/0.18)]"
+        />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="font-round font-extrabold text-cacao text-[1.1rem]">
+            {producto.alias ?? producto.nombre}
+            {item.cantidad > 1 && (
+              <span className="text-cacao-soft font-bold"> ×{item.cantidad}</span>
+            )}
+          </h3>
+          <span className="font-round font-extrabold text-coral whitespace-nowrap">
+            {formatPrecio(item.subtotal)}
+          </span>
+        </div>
+        <p className="text-[.9rem] text-cacao-soft font-bold">
+          {formatPrecio(producto.precio)} c/u
+        </p>
+        <div className="mt-2.5">
+          <button
+            type="button"
+            onClick={() => onRemove(item.id)}
+            className="inline-flex items-center gap-1.5 font-round font-bold text-[.88rem] text-cacao-soft bg-blush px-3 py-1.5 rounded-full transition-colors hover:bg-rosa-soft hover:text-coral-700"
+          >
+            <IconTrash /> Eliminar
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/* ─────────────── Carrito ─────────────── */
 
 export function CartView({ items, onEdit, onRemove, onAddAnother, onCheckout, onBack }: CartViewProps) {
   const total = totalPedido(items);
@@ -44,92 +192,38 @@ export function CartView({ items, onEdit, onRemove, onAddAnother, onCheckout, on
           <h2 className="font-round font-extrabold text-coral-700 text-2xl mb-1">
             Tu pedido está vacío
           </h2>
-          <p className="text-cacao-soft mb-6">Arma tu primera fresa con crema y aparecerá aquí.</p>
+          <p className="text-cacao-soft mb-6">Agrega productos del catálogo y aparecerán aquí.</p>
           <Button onClick={onAddAnother}>
-            Arma tus fresas <IconArrow />
+            Ver productos <IconArrow />
           </Button>
         </div>
       ) : (
         <>
           <div className="mb-4">
             <Badge variant="green">
-              <IconCart /> {items.length} {items.length === 1 ? "fresa armada" : "fresas armadas"}
+              <IconCart /> {items.length} {items.length === 1 ? "ítem" : "ítems"} en tu pedido
             </Badge>
           </div>
 
           <div className="grid gap-3.5">
-            {items.map((item, i) => {
-              const producto = productoPorId(item.productoId);
-              if (!producto) return null;
-              const desglose = desglosarSeleccion(producto, item.seleccion);
-              const base = desglose.find((d) => d.paso.tipo === "single" && d.paso.defineBase);
-              const baseOp = base?.paso.opciones.find(
-                (o) => o.id === item.seleccion[base.paso.id]?.[0],
-              );
-
+            {items.map((item) => {
+              if (item.tipo === "configurable") {
+                return (
+                  <ConfigurableCard
+                    key={item.id}
+                    item={item}
+                    index={items.filter((it) => it.tipo === "configurable").indexOf(item)}
+                    onEdit={onEdit}
+                    onRemove={onRemove}
+                  />
+                );
+              }
               return (
-                <article key={item.id} className="flex gap-3.5 bg-white rounded-card shadow-fm-sm p-3.5">
-                  <div className="grid place-items-center w-24 h-24 flex-none bg-blush rounded-media overflow-hidden">
-                    <img
-                      src="/assets/cup-chocolate.webp"
-                      alt=""
-                      className="w-[82%] h-[82%] object-contain drop-shadow-[0_6px_10px_rgb(200_70_95/0.18)]"
-                    />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-round font-extrabold text-cacao text-[1.1rem]">
-                        {producto.alias ?? producto.nombre} #{i + 1}
-                      </h3>
-                      <span className="font-round font-extrabold text-coral whitespace-nowrap">
-                        {formatPrecio(subtotalItem(item))}
-                      </span>
-                    </div>
-                    {baseOp && (
-                      <p className="text-[.9rem] text-cacao-soft font-bold mb-1.5">
-                        {baseOp.label}
-                        {baseOp.meta ? ` · ${baseOp.meta}` : ""}
-                      </p>
-                    )}
-
-                    <dl className="grid gap-0.5 text-[.9rem]">
-                      {desglose
-                        .filter((d) => !(d.paso.tipo === "single" && d.paso.defineBase))
-                        .map((d) => (
-                          <div key={d.paso.id} className="flex gap-1.5">
-                            <dt className="font-bold text-cacao-soft flex-none">{d.paso.etiqueta}:</dt>
-                            <dd className="text-cacao">
-                              {d.labels.length ? d.labels.join(", ") : "—"}
-                              {d.extras > 0 && (
-                                <em className="not-italic text-coral-700 font-bold">
-                                  {" "}
-                                  +{formatPrecio(d.costoExtras)}
-                                </em>
-                              )}
-                            </dd>
-                          </div>
-                        ))}
-                    </dl>
-
-                    <div className="flex gap-2 mt-2.5">
-                      <button
-                        type="button"
-                        onClick={() => onEdit(item.id)}
-                        className="inline-flex items-center gap-1.5 font-round font-bold text-[.88rem] text-coral-700 bg-coral-tint px-3 py-1.5 rounded-full transition-colors hover:bg-rosa-soft"
-                      >
-                        <IconEdit /> Editar
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => onRemove(item.id)}
-                        className="inline-flex items-center gap-1.5 font-round font-bold text-[.88rem] text-cacao-soft bg-blush px-3 py-1.5 rounded-full transition-colors hover:bg-rosa-soft hover:text-coral-700"
-                      >
-                        <IconTrash /> Eliminar
-                      </button>
-                    </div>
-                  </div>
-                </article>
+                <DirectoCard
+                  key={item.id}
+                  item={item}
+                  onRemove={onRemove}
+                />
               );
             })}
           </div>
@@ -144,7 +238,7 @@ export function CartView({ items, onEdit, onRemove, onAddAnother, onCheckout, on
           </div>
 
           <Button variant="secondary" block onClick={onAddAnother} className="mt-4">
-            <IconPlus /> Armar otra fresa
+            <IconPlus /> Agregar producto
           </Button>
         </>
       )}
