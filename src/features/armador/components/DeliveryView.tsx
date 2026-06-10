@@ -23,16 +23,26 @@ const PAGOS: { id: MetodoPago; nombre: string; icono: string }[] = [
 
 export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: DeliveryViewProps) {
   const total = totalPedido(items);
-  const [touched, setTouched] = useState(false);
+  const [touchedAddr, setTouchedAddr] = useState(false);
+  const [touchedNombre, setTouchedNombre] = useState(false);
   const addrRef = useRef<HTMLTextAreaElement>(null);
-  const addrError = touched && !entrega.direccion.trim();
+  const nombreRef = useRef<HTMLInputElement>(null);
+  const recogeEnTienda = entrega.pago === "recoger-en-tienda";
+  const addrError = touchedAddr && !recogeEnTienda && !entrega.direccion.trim();
+  const nombreError = touchedNombre && recogeEnTienda && !entrega.nombreRecoge.trim();
 
   const set = <K extends keyof DatosEntrega>(k: K, v: DatosEntrega[K]) =>
     setEntrega((d) => ({ ...d, [k]: v }));
 
   const submit = () => {
-    if (!entrega.direccion.trim()) {
-      setTouched(true);
+    if (recogeEnTienda) {
+      if (!entrega.nombreRecoge.trim()) {
+        setTouchedNombre(true);
+        nombreRef.current?.focus();
+        return;
+      }
+    } else if (!entrega.direccion.trim()) {
+      setTouchedAddr(true);
       addrRef.current?.focus();
       return;
     }
@@ -67,16 +77,22 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
       <label className="block mb-4">
         <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
           Dirección{" "}
-          <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
-            obligatorio
-          </em>
+          {recogeEnTienda ? (
+            <em className="not-italic font-bold text-[.78rem] text-verde-700 bg-verde-tint rounded-full px-2 py-0.5">
+              opcional
+            </em>
+          ) : (
+            <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
+              obligatorio
+            </em>
+          )}
         </span>
         <textarea
           ref={addrRef}
           className={cn(inputClasses, "resize-y min-h-24", addrError && "border-coral-700")}
           value={entrega.direccion}
           onChange={(e) => set("direccion", e.target.value)}
-          onBlur={() => setTouched(true)}
+          onBlur={() => setTouchedAddr(true)}
           placeholder="Calle / carrera, número, barrio, casa o apto…"
         />
         {addrError && (
@@ -159,16 +175,23 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
         <label className="block mb-4">
           <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
             Nombre de quien recoge el pedido{" "}
-            <em className="not-italic font-bold text-[.78rem] text-verde-700 bg-verde-tint rounded-full px-2 py-0.5">
+            <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
               obligatorio
             </em>
           </span>
           <input
-            className={inputClasses}
+            ref={nombreRef}
+            className={cn(inputClasses, nombreError && "border-coral-700")}
             value={entrega.nombreRecoge}
             onChange={(e) => set("nombreRecoge", e.target.value)}
+            onBlur={() => setTouchedNombre(true)}
             placeholder="Ej: Juan Pérez"
           />
+          {nombreError && (
+            <span className="block mt-1 text-[.85rem] font-bold text-coral-700">
+              Necesitamos saber quién recoge el pedido.
+            </span>
+          )}
         </label>
       )}
 
