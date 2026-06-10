@@ -4,6 +4,13 @@ import { Badge, Button, Drip, IconArrow, IconClock, IconPin, IconWhatsApp } from
 
 const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero pedir fresas con crema a domicilio.";
 
+const DECOS = [
+  { img: "/assets/merengon.webp", className: "left-[2%] top-[8%] w-20 -rotate-12 min-[940px]:w-28", delay: "0s", duration: "5.5s" },
+  { img: "/assets/cup-fresa-helado.webp", className: "right-[3%] top-[6%] w-16 rotate-6 min-[940px]:w-24", delay: "1.2s", duration: "4.5s" },
+  { img: "/assets/oblea.webp", className: "left-[6%] bottom-[6%] w-18 rotate-12 min-[940px]:w-26", delay: "2s", duration: "6s" },
+  { img: "/assets/cup-salpiconada.webp", className: "right-[4%] bottom-[12%] w-16 -rotate-6 min-[940px]:w-24", delay: "3s", duration: "5s" },
+];
+
 interface HeroProps {
   onOpenArmador: () => void;
 }
@@ -56,16 +63,26 @@ export function Hero({ onOpenArmador }: HeroProps) {
           </div>
         </div>
 
-        <div className="relative grid place-items-center h-[340px] mt-1.5 min-[940px]:h-[460px]">
+        <div className="relative grid place-items-center h-[340px] mt-1.5 min-[940px]:h-[520px]">
           <div
-            className="absolute w-[330px] h-[330px] bg-[radial-gradient(circle,rgb(232_76_107/0.18),transparent_62%)]"
+            className="absolute w-[360px] h-[360px] min-[940px]:w-[480px] min-[940px]:h-[480px] bg-[radial-gradient(circle,rgb(232_76_107/0.18),transparent_62%)]"
             aria-hidden="true"
           />
           <img
-            className="relative z-2 w-[clamp(230px,64vw,320px)] min-[940px]:w-[clamp(300px,30vw,400px)] object-contain drop-shadow-[0_22px_32px_rgb(200_70_95/0.28)] animate-floaty"
+            className="relative z-2 w-[clamp(260px,74vw,350px)] min-[940px]:w-[clamp(420px,36vw,520px)] object-contain drop-shadow-[0_22px_32px_rgb(200_70_95/0.28)] animate-floaty"
             src="/assets/mascot-fresa.webp"
             alt="Mascota de D'Fruta Madre, una fresa sonriente"
           />
+          {DECOS.map((d) => (
+            <img
+              key={d.img}
+              src={d.img}
+              alt=""
+              aria-hidden="true"
+              className={`absolute z-1 object-contain select-none pointer-events-none drop-shadow-[0_10px_16px_rgb(200_70_95/0.22)] animate-floaty ${d.className}`}
+              style={{ animationDelay: d.delay, animationDuration: d.duration }}
+            />
+          ))}
         </div>
       </div>
 
