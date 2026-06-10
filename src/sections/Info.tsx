@@ -25,7 +25,7 @@ export function Info() {
               <IconPin />
             </span>
             <h3 className="font-round font-extrabold text-coral-700 text-[1.2rem] mb-1.5">
-              Cobertura
+              Dirección
             </h3>
             <p className="text-cacao-soft leading-normal">
               Domicilios <b className="text-cacao">solo en Girardota</b>
