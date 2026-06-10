@@ -42,8 +42,10 @@ export function buildOrderMessage(items: ItemPedido[], entrega: DatosEntrega): s
 
   L.push(`💰 TOTAL: ${formatPrecio(totalPedido(items))}`);
   L.push("");
-  L.push(`📍 Dirección: ${entrega.direccion.trim() || "—"}`);
-  if (entrega.referencia.trim()) L.push(`🗺️ Referencia: ${entrega.referencia.trim()}`);
+  if (entrega.pago !== "recoger-en-tienda") {
+    L.push(`📍 Dirección: ${entrega.direccion.trim() || "—"}`);
+    if (entrega.referencia.trim()) L.push(`🗺️ Referencia: ${entrega.referencia.trim()}`);
+  }
 
   let pagoLine = `💵 Pago: ${entrega.pago === "transferencia" ? "Transferencia" : entrega.pago === "recoger-en-tienda" ? "Recoger en tienda" : "Efectivo"}`;
   if (entrega.pago === "efectivo" && entrega.pagaCon.trim()) {

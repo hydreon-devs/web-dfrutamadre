@@ -74,45 +74,43 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
         Solo nos falta dónde llevarlas. <b>No pedimos tu teléfono</b> — WhatsApp ya lo lleva. 🛵
       </p>
 
-      <label className="block mb-4">
-        <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
-          Dirección{" "}
-          {recogeEnTienda ? (
-            <em className="not-italic font-bold text-[.78rem] text-verde-700 bg-verde-tint rounded-full px-2 py-0.5">
-              opcional
-            </em>
-          ) : (
-            <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
-              obligatorio
-            </em>
-          )}
-        </span>
-        <textarea
-          ref={addrRef}
-          className={cn(inputClasses, "resize-y min-h-24", addrError && "border-coral-700")}
-          value={entrega.direccion}
-          onChange={(e) => set("direccion", e.target.value)}
-          onBlur={() => setTouchedAddr(true)}
-          placeholder="Calle / carrera, número, barrio, casa o apto…"
-        />
-        {addrError && (
-          <span className="block mt-1 text-[.85rem] font-bold text-coral-700">
-            Necesitamos la dirección para el domicilio.
-          </span>
-        )}
-      </label>
+      {!recogeEnTienda && (
+        <>
+          <label className="block mb-4">
+            <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
+              Dirección{" "}
+              <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
+                obligatorio
+              </em>
+            </span>
+            <textarea
+              ref={addrRef}
+              className={cn(inputClasses, "resize-y min-h-24", addrError && "border-coral-700")}
+              value={entrega.direccion}
+              onChange={(e) => set("direccion", e.target.value)}
+              onBlur={() => setTouchedAddr(true)}
+              placeholder="Calle / carrera, número, barrio, casa o apto…"
+            />
+            {addrError && (
+              <span className="block mt-1 text-[.85rem] font-bold text-coral-700">
+                Necesitamos la dirección para el domicilio.
+              </span>
+            )}
+          </label>
 
-      <label className="block mb-4">
-        <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
-          Punto de referencia
-        </span>
-        <input
-          className={inputClasses}
-          value={entrega.referencia}
-          onChange={(e) => set("referencia", e.target.value)}
-          placeholder="Ej: portón verde, frente a la tienda…"
-        />
-      </label>
+          <label className="block mb-4">
+            <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
+              Punto de referencia
+            </span>
+            <input
+              className={inputClasses}
+              value={entrega.referencia}
+              onChange={(e) => set("referencia", e.target.value)}
+              placeholder="Ej: portón verde, frente a la tienda…"
+            />
+          </label>
+        </>
+      )}
 
       <div className="mb-4">
         <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
