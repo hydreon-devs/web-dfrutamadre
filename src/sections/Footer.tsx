@@ -32,7 +32,7 @@ export function Footer({ onOpenArmador }: FooterProps) {
             ¿Se te antojó?
           </h2>
           <p className="text-[1.1rem] font-semibold text-white/92 mb-6">
-            Ármalas a tu gusto y te las llevamos a la puerta.
+            Arma tu pedido a tu gusto y te lo llevamos hasta tu casa.
           </p>
           <div className="flex flex-col items-center gap-3 min-[720px]:flex-row min-[720px]:justify-center">
             <Button

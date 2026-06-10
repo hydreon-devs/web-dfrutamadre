@@ -30,7 +30,7 @@ export function Hero({ onOpenArmador }: HeroProps) {
         <div className="relative z-2 text-center min-[940px]:text-left">
           <Badge variant="green">🍓 Hechas en casa, a tu gusto</Badge>
           <h1 className="display-brand text-[clamp(3.4rem,17vw,6rem)] min-[1100px]:text-[6.4rem] mt-2 mb-2">
-            Ármalas
+            Arma tu pedido
             <br />a tu gusto
           </h1>
           <p className="text-[clamp(1.1rem,4.4vw,1.35rem)] font-semibold text-cacao max-w-[22ch] mx-auto min-[940px]:mx-0">

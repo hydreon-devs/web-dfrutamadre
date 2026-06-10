@@ -145,7 +145,7 @@ export function ProductCatalog({
         {/* Indicador de carrito */}
         {itemCount > 0 && (
           <div className="mb-5 p-3 bg-coral text-white font-round font-extrabold text-center rounded-full shadow-fm-sm">
-            Carrito: {itemCount} · {formatPrecio(total)}
+            Productos en el carrito: {itemCount} — {formatPrecio(total)}
           </div>
         )}
         {/* Configurables */}

@@ -49,7 +49,7 @@ function EspecialCard({ p }: { p: Especial }) {
       <p className="text-[.92rem] text-cacao-soft mb-3">{p.desc}</p>
       <div className="flex flex-wrap gap-2 mt-auto">
         {p.precios.map((s, i) => (
-          <span key={i} className="inline-flex flex-col bg-blush rounded-[14px] px-3 py-1.5">
+          <span key={i} className="inline-flex flex-col bg-coral-tint rounded-[14px] px-3 py-1.5">
             <span className="text-[.72rem] text-cacao-soft font-bold">{s.label}</span>
             <span className="font-round font-extrabold text-coral-700">
               {formatPrecio(s.precio)}
