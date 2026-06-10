@@ -12,7 +12,7 @@ export function QuantityStepper({ cantidad, onChange }: QuantityStepperProps) {
         type="button"
         aria-label="Reducir cantidad"
         onClick={() => onChange(cantidad - 1)}
-        disabled={cantidad <= 1}
+        disabled={cantidad <= 0}
         className="grid place-items-center w-9 h-9 rounded-full border-2 border-linea bg-white text-coral-700 font-round font-extrabold text-lg transition-all hover:border-coral hover:bg-coral-tint disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-linea disabled:hover:bg-white"
       >
         <IconMinus />

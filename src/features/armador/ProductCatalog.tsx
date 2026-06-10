@@ -101,7 +101,7 @@ function DirectoRow({ producto, cantidad, onChange }: DirectoRowProps) {
           <p className="text-[.85rem] text-cacao-soft font-bold">{formatPrecio(producto.precio)} c/u</p>
         </div>
         <div className="flex items-center justify-between mt-2">
-          <QuantityStepper cantidad={Math.max(1, cantidad)} onChange={onChange} />
+          <QuantityStepper cantidad={cantidad} onChange={onChange} />
           {cantidad > 0 && (
             <span className="font-round font-extrabold text-coral text-[1.05rem]">
               {formatPrecio(subtotal)}
