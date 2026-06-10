@@ -2,7 +2,7 @@ import { BRAND } from "../domain/menu";
 import { buildWaUrl } from "../shared/lib/whatsapp";
 import { Badge, Button, Drip, IconArrow, IconClock, IconPin, IconWhatsApp } from "../shared/ui";
 
-const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero pedir fresas con crema a domicilio.";
+const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero hacer un pedido a domicilio.";
 
 const DECOS = [
   { img: "/assets/merengon.webp", className: "left-[2%] top-[8%] w-20 -rotate-12 min-[940px]:w-28", delay: "0s", duration: "5.5s" },
@@ -39,7 +39,7 @@ export function Hero({ onOpenArmador }: HeroProps) {
 
           <div className="mt-6.5 flex flex-col items-center gap-3 min-[720px]:flex-row min-[720px]:justify-center min-[940px]:justify-start">
             <Button size="hero" onClick={onOpenArmador} className="w-[min(360px,100%)] min-[720px]:w-auto">
-              Arma tus fresas <IconArrow />
+              Arma tu pedido <IconArrow />
             </Button>
             <Button
               variant="secondary"

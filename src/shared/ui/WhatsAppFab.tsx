@@ -2,7 +2,7 @@ import { BRAND } from "../../domain/menu";
 import { buildWaUrl } from "../lib/whatsapp";
 import { IconWhatsApp } from "./icons";
 
-const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero pedir fresas con crema a domicilio.";
+const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero hacer un pedido a domicilio.";
 
 export function WhatsAppFab() {
   return (

@@ -11,7 +11,7 @@ import {
   Logo,
 } from "../shared/ui";
 
-const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero pedir fresas con crema a domicilio.";
+const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero hacer un pedido a domicilio.";
 
 interface FooterProps {
   onOpenArmador: () => void;
@@ -40,7 +40,7 @@ export function Footer({ onOpenArmador }: FooterProps) {
               onClick={onOpenArmador}
               className="bg-white text-coral-700 hover:bg-white w-[min(340px,100%)] min-[720px]:w-auto"
             >
-              Arma tus fresas <IconArrow />
+              Arma tu pedido <IconArrow />
             </Button>
             <Button variant="wa" href={wa} target="_blank" rel="noopener" className="w-[min(340px,100%)] min-[720px]:w-auto">
               <IconWhatsApp /> WhatsApp
