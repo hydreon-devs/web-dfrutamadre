@@ -71,7 +71,7 @@ export function CartView({ items, onEdit, onRemove, onAddAnother, onCheckout, on
                 <article key={item.id} className="flex gap-3.5 bg-white rounded-card shadow-fm-sm p-3.5">
                   <div className="grid place-items-center w-24 h-24 flex-none bg-blush rounded-media overflow-hidden">
                     <img
-                      src="/assets/cup-fresa-helado.webp"
+                      src="/assets/cup-chocolate.webp"
                       alt=""
                       className="w-[82%] h-[82%] object-contain drop-shadow-[0_6px_10px_rgb(200_70_95/0.18)]"
                     />
