@@ -48,14 +48,13 @@ export function buildOrderMessage(items: ItemPedido[], entrega: DatosEntrega): s
   let pagoLine = `💵 Pago: ${entrega.pago === "transferencia" ? "Transferencia" : entrega.pago === "recoger-en-tienda" ? "Recoger en tienda" : "Efectivo"}`;
   if (entrega.pago === "efectivo" && entrega.pagaCon.trim()) {
     const monto = Number(entrega.pagaCon.replace(/\D/g, "")) || 0;
-    if (monto > 0) pagoLine += ` (pago con ${formatPrecio(monto)})`;
+    if (monto > 0) pagoLine += ` — Pago con: ${formatPrecio(monto)}`;
   }
   if (entrega.pago === "recoger-en-tienda" && entrega.nombreRecoge.trim()) {
-    pagoLine += ` (recogido por ${entrega.nombreRecoge.trim()})`;
+    pagoLine += ` — El pedido es recogido por: ${entrega.nombreRecoge.trim()}`;
   }
   L.push(pagoLine);
   L.push("");
-  L.push("¿Me confirmas disponibilidad y domicilio? 🛵");
 
   return L.join("\n");
 }
