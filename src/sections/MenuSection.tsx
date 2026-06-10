@@ -1,6 +1,9 @@
-import { ESPECIALES, OTROS, fresasConCrema } from "../domain/menu";
+import { useEffect, useRef, useState } from "react";
+import { BRAND, ESPECIALES, OTROS, fresasConCrema } from "../domain/menu";
+import type { Especial } from "../domain/menu";
 import type { PasoMulti, PasoSingle } from "../domain/builder/types";
 import { formatPrecio } from "../shared/lib/format";
+import { buildWaUrl } from "../shared/lib/whatsapp";
 import { Badge } from "../shared/ui";
 import { cn } from "../shared/lib/cn";
 
@@ -10,6 +13,83 @@ const clasicos = fresasConCrema.pasos.find((p) => p.id === "clasicos") as PasoMu
 const premium = fresasConCrema.pasos.find((p) => p.id === "premium") as PasoMulti;
 
 const escalaTamano: Record<string, number> = { peq: 0.78, med: 0.92, gra: 1.1 };
+
+function EspecialCard({ p }: { p: Especial }) {
+  const [aviso, setAviso] = useState(false);
+  const timerRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+
+  const mostrarAviso = () => {
+    window.clearTimeout(timerRef.current);
+    setAviso(true);
+    timerRef.current = window.setTimeout(() => setAviso(false), 4000);
+  };
+
+  const cardClasses =
+    "relative flex flex-col bg-white rounded-card shadow-fm-sm p-3.5 border-2 border-transparent transition-all hover:-translate-y-1 hover:shadow-fm-md hover:border-rosa-soft";
+
+  const contenido = (
+    <>
+      {p.tag && (
+        <Badge variant="coral" className="absolute top-5.5 left-5.5 z-3">
+          {p.tag}
+        </Badge>
+      )}
+      <div className="relative grid place-items-center aspect-square bg-blush rounded-media overflow-hidden">
+        <img
+          src={p.img}
+          alt={p.nombre}
+          className="w-[86%] h-[86%] object-contain drop-shadow-[0_8px_14px_rgb(200_70_95/0.18)]"
+        />
+      </div>
+      <h4 className="font-round font-extrabold text-coral-700 text-[1.12rem] mt-2.5 mb-0.5">
+        {p.nombre}
+      </h4>
+      <p className="text-[.92rem] text-cacao-soft mb-3">{p.desc}</p>
+      <div className="flex flex-wrap gap-2 mt-auto">
+        {p.precios.map((s, i) => (
+          <span key={i} className="inline-flex flex-col bg-blush rounded-[14px] px-3 py-1.5">
+            <span className="text-[.72rem] text-cacao-soft font-bold">{s.label}</span>
+            <span className="font-round font-extrabold text-coral-700">
+              {formatPrecio(s.precio)}
+            </span>
+          </span>
+        ))}
+      </div>
+    </>
+  );
+
+  if (p.waMensaje) {
+    return (
+      <a
+        href={buildWaUrl(BRAND.telefonoIntl, p.waMensaje)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cardClasses}
+      >
+        {contenido}
+        <span className="mt-3 font-round font-extrabold text-[.9rem] text-coral">
+          Pedir por WhatsApp →
+        </span>
+      </a>
+    );
+  }
+
+  return (
+    <button type="button" onClick={mostrarAviso} className={cn(cardClasses, "text-left")}>
+      {contenido}
+      <span className="mt-3 font-round font-extrabold text-[.9rem] text-cacao-soft">
+        Disponible en nuestro punto físico 🏪
+      </span>
+      {aviso && (
+        <span className="absolute inset-x-2.5 bottom-2.5 z-3 bg-coral text-white text-[.85rem] font-bold rounded-media px-3 py-2.5 shadow-fm-md">
+          Las obleas solo se venden en nuestro punto físico 🏪 {BRAND.direccion}
+        </span>
+      )}
+    </button>
+  );
+}
 
 function ChipStatic({ children, prem }: { children: string; prem?: boolean }) {
   return (
@@ -127,37 +207,7 @@ export function MenuSection() {
           <p className="text-cacao-soft font-semibold mb-4">De la casa, para variar.</p>
           <div className="grid grid-cols-2 gap-3.5 min-[940px]:grid-cols-4">
             {ESPECIALES.map((p) => (
-              <article
-                key={p.id}
-                className="relative flex flex-col bg-white rounded-card shadow-fm-sm p-3.5 border-2 border-transparent transition-all hover:-translate-y-1 hover:shadow-fm-md hover:border-rosa-soft"
-              >
-                {p.tag && (
-                  <Badge variant="coral" className="absolute top-5.5 left-5.5 z-3">
-                    {p.tag}
-                  </Badge>
-                )}
-                <div className="relative grid place-items-center aspect-square bg-blush rounded-media overflow-hidden">
-                  <img
-                    src={p.img}
-                    alt={p.nombre}
-                    className="w-[86%] h-[86%] object-contain drop-shadow-[0_8px_14px_rgb(200_70_95/0.18)]"
-                  />
-                </div>
-                <h4 className="font-round font-extrabold text-coral-700 text-[1.12rem] mt-2.5 mb-0.5">
-                  {p.nombre}
-                </h4>
-                <p className="text-[.92rem] text-cacao-soft mb-3">{p.desc}</p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {p.precios.map((s, i) => (
-                    <span key={i} className="inline-flex flex-col bg-blush rounded-[14px] px-3 py-1.5">
-                      <span className="text-[.72rem] text-cacao-soft font-bold">{s.label}</span>
-                      <span className="font-round font-extrabold text-coral-700">
-                        {formatPrecio(s.precio)}
-                      </span>
-                    </span>
-                  ))}
-                </div>
-              </article>
+              <EspecialCard key={p.id} p={p} />
             ))}
           </div>
         </div>

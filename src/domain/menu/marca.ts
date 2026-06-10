@@ -27,6 +27,8 @@ export interface Especial {
   img: string;
   precios: PrecioEspecial[];
   tag?: string;
+  /** Mensaje de WhatsApp para pedirlo a domicilio; sin él, solo se vende en punto físico */
+  waMensaje?: string;
 }
 
 /** Otros antojos del menú (no entran al armador por ahora) */
@@ -37,6 +39,7 @@ export const ESPECIALES: Especial[] = [
     desc: "Crema de la casa, fresa, durazno, mermelada de fresa y merengue.",
     img: "/assets/merengon.webp",
     precios: [{ label: "Porción", precio: 15000 }],
+    waMensaje: "¡Hola D'Fruta Madre! 🍓 Quiero pedir un Merengón D'Fruta Madre a domicilio.",
   },
   {
     id: "oblea",
@@ -57,6 +60,7 @@ export const ESPECIALES: Especial[] = [
       { label: "12 oz", precio: 8000 },
       { label: "16 oz", precio: 12000 },
     ],
+    waMensaje: "¡Hola D'Fruta Madre! 🍍 Quiero pedir una Salpiconada a domicilio.",
   },
   {
     id: "duraznos",
@@ -67,6 +71,7 @@ export const ESPECIALES: Especial[] = [
       { label: "16 oz", precio: 18000 },
       { label: "24 oz", precio: 22000 },
     ],
+    waMensaje: "¡Hola D'Fruta Madre! 🍑 Quiero pedir Duraznos con crema a domicilio.",
   },
 ];
 
