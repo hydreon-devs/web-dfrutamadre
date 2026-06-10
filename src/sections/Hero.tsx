@@ -58,7 +58,7 @@ export function Hero({ onOpenArmador }: HeroProps) {
             </span>
             <span className="opacity-50">·</span>
             <span className="inline-flex items-center gap-1.5">
-              <IconPin /> Solo Girardota
+              <IconPin /> Calle 10 N18-5, Girardota
             </span>
           </div>
         </div>
