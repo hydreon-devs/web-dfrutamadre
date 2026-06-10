@@ -58,7 +58,8 @@ export const ESPECIALES: Especial[] = [
     img: "/assets/cup-fresa-helado.webp",
     precios: [
       { label: "12 oz", precio: 8000 },
-      { label: "16 oz", precio: 12000 },
+      { label: "Con queso o helado", precio: 12000 },
+      { label: "Con ambos", precio: 15000 },
     ],
     waMensaje: "¡Hola D'Fruta Madre! 🍍 Quiero pedir una Salpiconada a domicilio.",
   },
@@ -68,8 +69,9 @@ export const ESPECIALES: Especial[] = [
     desc: "Duraznos en almíbar bañados en crema de la casa.",
     img: "/assets/cup-salpiconada.webp",
     precios: [
-      { label: "16 oz", precio: 18000 },
-      { label: "24 oz", precio: 22000 },
+      { label: "12 oz", precio: 18000 },
+      { label: "16 oz", precio: 22000 },
+      { label: "24 oz", precio: 28000 },
     ],
     waMensaje: "¡Hola D'Fruta Madre! 🍑 Quiero pedir Duraznos con crema a domicilio.",
   },
