@@ -91,7 +91,7 @@ export function Footer({ onOpenArmador }: FooterProps) {
               target="_blank"
               rel="noopener"
             >
-              Hydreon
+              Hydreon Studios
             </a>{" "}
             ·{" "}
             <a
