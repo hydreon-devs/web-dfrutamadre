@@ -3,6 +3,7 @@ import { desglosarSeleccion, totalPedido } from "../../../domain/builder/pricing
 import { productoDirectoPorId, productoPorId } from "../../../domain/menu";
 import { formatPrecio } from "../../../shared/lib/format";
 import { Badge, Button, IconArrow, IconCart, IconEdit, IconPlus, IconTrash } from "../../../shared/ui";
+import { QuantityStepper } from "./QuantityStepper";
 import { CheckoutShell } from "./CheckoutShell";
 
 /* ─────────────── Assets ─────────────── */
@@ -28,6 +29,7 @@ interface CartViewProps {
   items: ItemPedido[];
   onEdit: (id: number) => void;
   onRemove: (id: number) => void;
+  onUpdateCantidad: (id: number, cantidad: number) => void;
   onAddAnother: () => void;
   onCheckout: () => void;
   onBack: () => void;
@@ -117,9 +119,10 @@ function ConfigurableCard({ item, index, onEdit, onRemove }: ConfigurableCardPro
 interface DirectoCardProps {
   item: ItemPedidoDirecto;
   onRemove: (id: number) => void;
+  onUpdateCantidad: (id: number, cantidad: number) => void;
 }
 
-function DirectoCard({ item, onRemove }: DirectoCardProps) {
+function DirectoCard({ item, onRemove, onUpdateCantidad }: DirectoCardProps) {
   const producto = productoDirectoPorId(item.productoId);
   if (!producto) return null;
 
@@ -136,18 +139,16 @@ function DirectoCard({ item, onRemove }: DirectoCardProps) {
         <div className="flex items-baseline justify-between gap-2">
           <h3 className="font-round font-extrabold text-cacao text-[1.1rem]">
             {producto.alias ?? producto.nombre}
-            {item.cantidad > 1 && (
-              <span className="text-cacao-soft font-bold"> ×{item.cantidad}</span>
-            )}
           </h3>
           <span className="font-round font-extrabold text-coral whitespace-nowrap">
             {formatPrecio(item.subtotal)}
           </span>
         </div>
-        <p className="text-[.9rem] text-cacao-soft font-bold">
+        <p className="text-[.9rem] text-cacao-soft font-bold mb-1">
           {formatPrecio(producto.precio)} c/u
         </p>
-        <div className="mt-2.5">
+        <div className="flex items-center gap-3 mt-2.5">
+          <QuantityStepper cantidad={item.cantidad} onChange={(n) => onUpdateCantidad(item.id, n)} />
           <button
             type="button"
             onClick={() => onRemove(item.id)}
@@ -163,7 +164,7 @@ function DirectoCard({ item, onRemove }: DirectoCardProps) {
 
 /* ─────────────── Carrito ─────────────── */
 
-export function CartView({ items, onEdit, onRemove, onAddAnother, onCheckout, onBack }: CartViewProps) {
+export function CartView({ items, onEdit, onRemove, onUpdateCantidad, onAddAnother, onCheckout, onBack }: CartViewProps) {
   const total = totalPedido(items);
 
   return (
@@ -223,6 +224,7 @@ export function CartView({ items, onEdit, onRemove, onAddAnother, onCheckout, on
                   key={item.id}
                   item={item}
                   onRemove={onRemove}
+                  onUpdateCantidad={onUpdateCantidad}
                 />
               );
             })}

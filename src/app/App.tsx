@@ -130,6 +130,7 @@ export function App() {
             items={pedido.items}
             onEdit={editItem}
             onRemove={pedido.eliminar}
+            onUpdateCantidad={(id, cantidad) => pedido.actualizarDirecto(id, cantidad)}
             onAddAnother={openCatalog}
             onCheckout={() => go("delivery")}
             onBack={() => go("catalog")}
