@@ -8,6 +8,7 @@ import { DeliveryView } from "../features/armador/components/DeliveryView";
 import { WhatsAppView } from "../features/armador/components/WhatsAppView";
 import { usePedido } from "../features/armador/hooks/usePedido";
 import { ENTREGA_INICIAL, type DatosEntrega } from "../features/armador/types";
+import { formatPrecio } from "../shared/lib/format";
 import { WhatsAppFab } from "../shared/ui";
 
 type View = "landing" | "armador" | "cart" | "delivery" | "whatsapp";
@@ -43,6 +44,12 @@ export function App() {
   const armadorBack = () => {
     setEditId(null);
     setView(pedido.items.length ? "cart" : "landing");
+  };
+
+  const finishPedido = () => {
+    pedido.vaciar();
+    setEntrega(ENTREGA_INICIAL);
+    go("landing");
   };
 
   const itemEnEdicion = editId != null ? pedido.items.find((it) => it.id === editId) : undefined;
@@ -83,7 +90,14 @@ export function App() {
           />
         );
       case "whatsapp":
-        return <WhatsAppView items={pedido.items} entrega={entrega} onBack={() => go("delivery")} />;
+        return (
+          <WhatsAppView
+            items={pedido.items}
+            entrega={entrega}
+            onBack={() => go("delivery")}
+            onSent={finishPedido}
+          />
+        );
     }
   };
 
@@ -93,6 +107,19 @@ export function App() {
         {renderView()}
       </div>
       {view === "landing" && <WhatsAppFab />}
+      {view === "landing" && pedido.items.length > 0 && (
+        <button
+          type="button"
+          onClick={() => go("cart")}
+          className="fixed left-4 bottom-4 z-60 inline-flex items-center gap-2 bg-coral text-white font-round font-extrabold text-[1.05rem] px-4.5 py-3.5 rounded-full shadow-fm-md transition-all hover:-translate-y-0.5 hover:brightness-105"
+          aria-label="Ver tu pedido"
+        >
+          <span aria-hidden="true">🛒</span>
+          <span>
+            Tu pedido ({pedido.items.length}) · {formatPrecio(pedido.total)}
+          </span>
+        </button>
+      )}
     </>
   );
 }

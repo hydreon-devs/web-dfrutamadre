@@ -29,5 +29,7 @@ export function usePedido() {
     setItems((prev) => prev.filter((it) => it.id !== id));
   };
 
-  return { items, agregar, actualizar, eliminar, total: totalPedido(items) };
+  const vaciar = () => setItems([]);
+
+  return { items, agregar, actualizar, eliminar, vaciar, total: totalPedido(items) };
 }

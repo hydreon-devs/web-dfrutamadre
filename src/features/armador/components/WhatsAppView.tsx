@@ -9,9 +9,10 @@ interface WhatsAppViewProps {
   items: ItemPedido[];
   entrega: DatosEntrega;
   onBack: () => void;
+  onSent: () => void;
 }
 
-export function WhatsAppView({ items, entrega, onBack }: WhatsAppViewProps) {
+export function WhatsAppView({ items, entrega, onBack, onSent }: WhatsAppViewProps) {
   const msg = buildOrderMessage(items, entrega);
   const url = waUrlPedido(items, entrega);
   const lines = msg.split("\n");
@@ -62,7 +63,7 @@ export function WhatsAppView({ items, entrega, onBack }: WhatsAppViewProps) {
         </div>
       </div>
 
-      <Button variant="wa" block href={url} target="_blank" rel="noopener">
+      <Button variant="wa" block href={url} target="_blank" rel="noopener" onClick={onSent}>
         <IconWhatsApp /> Abrir WhatsApp y enviar
       </Button>
       <p className="text-center text-[.85rem] text-cacao-soft mt-2.5 mb-3">
