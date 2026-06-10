@@ -1,6 +1,11 @@
 import { BRAND, RESENAS } from "../domain/menu";
 import { Button, IconInstagram, Stars } from "../shared/ui";
 
+const INSTAGRAM_FOTOS = Array.from(
+  { length: 5 },
+  (_, i) => `/assets/img-instagram/img-instagram-fresas${i + 1}.jpeg`,
+);
+
 export function Social() {
   return (
     <section className="relative bg-blush py-[clamp(48px,9vw,96px)]">
@@ -40,7 +45,7 @@ export function Social() {
           ))}
         </div>
 
-        {/* Feed Instagram (placeholders — reemplazar por fotos reales) */}
+        {/* Feed Instagram */}
         <div className="bg-white rounded-card shadow-fm-sm p-5" data-reveal>
           <div className="flex items-center justify-between mb-3.5">
             <div className="flex items-center gap-2 font-round text-coral-700 text-[1.05rem]">
@@ -51,21 +56,34 @@ export function Social() {
             </Button>
           </div>
           <div className="grid grid-cols-3 gap-2 min-[720px]:grid-cols-6">
-            {Array.from({ length: 6 }).map((_, i) => (
+            {INSTAGRAM_FOTOS.map((src, i) => (
               <a
-                key={i}
-                className="grid place-items-center aspect-square rounded-[14px] border-2 border-dashed border-rosa text-coral-700 text-[.8rem] font-bold text-center p-2.5 bg-[repeating-linear-gradient(45deg,#f7e6ea_0_10px,#fdf2f5_10px_20px)]"
+                key={src}
+                className="block aspect-square rounded-[14px] overflow-hidden"
                 href={BRAND.instagramUrl}
                 target="_blank"
                 rel="noopener"
               >
-                <span className="opacity-80">
-                  foto real
-                  <br />
-                  aquí
-                </span>
+                <img
+                  src={src}
+                  alt={`Fresas con crema de @${BRAND.instagram} ${i + 1}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
               </a>
             ))}
+            <a
+              className="grid place-items-center aspect-square rounded-[14px] bg-blush text-coral-700 text-[.8rem] font-bold text-center p-2.5"
+              href={BRAND.instagramUrl}
+              target="_blank"
+              rel="noopener"
+            >
+              <span>
+                Ver más
+                <br />
+                <IconInstagram />
+              </span>
+            </a>
           </div>
         </div>
       </div>
