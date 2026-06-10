@@ -1,0 +1,208 @@
+/* ============================================================
+   D'FRUTA MADRE — ARMADOR WIZARD (estilos)
+   ============================================================ */
+.wz{
+  min-height: 100vh;
+  background: var(--crema);
+  display: flex; flex-direction: column;
+  padding-bottom: 96px; /* espacio barra inferior */
+}
+
+/* ---------- Top: progreso + volver ---------- */
+.wz-top{
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(255,253,248,.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 18px rgba(200,70,95,.08);
+  padding: 12px 0 0;
+}
+.wz-top__in{
+  width:100%; max-width: 640px; margin-inline:auto; padding: 0 var(--gutter) 12px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.wz-back{
+  display:inline-flex; align-items:center; gap:6px;
+  background:#fff; border:2px solid var(--line); color: var(--coral-700);
+  font-family: var(--font-round); font-weight:700; font-size:.92rem;
+  padding: 8px 14px; border-radius: var(--r-pill);
+  transition: background .18s, transform .14s;
+}
+.wz-back:hover{ background: var(--coral-tint); transform: translateX(-2px); }
+.wz-progress__label{
+  font-family: var(--font-round); font-weight:800; color: var(--texto);
+  font-size:1rem; letter-spacing:.01em;
+}
+.wz-progress__label span{ color: var(--texto-60); font-weight:700; }
+
+.wz-progress{
+  width:100%; max-width: 640px; margin-inline:auto; padding: 0 var(--gutter);
+  display:grid; grid-template-columns: repeat(4, 1fr); gap: 7px;
+  padding-bottom: 12px;
+}
+.wz-progress__seg{
+  height: 7px; border-radius: var(--r-pill);
+  background: var(--rosa-soft);
+  transition: background .35s ease, transform .35s ease;
+  transform-origin: left;
+}
+.wz-progress__seg.is-done{ background: var(--coral); }
+.wz-progress__seg.is-active{
+  background: var(--coral);
+  box-shadow: 0 0 0 3px var(--coral-tint);
+}
+
+/* ---------- Cuerpo ---------- */
+.wz-body{ flex:1; }
+.wz-body__in{ max-width: 640px; padding-top: 26px; padding-bottom: 10px; }
+
+.wz-step{ animation: wzIn .34s cubic-bezier(.22,1,.36,1) both; }
+@keyframes wzIn{
+  from{ transform: translateX(calc(var(--dir,1) * 26px)); }
+  to{ transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce){ .wz-step{ animation:none; } }
+
+.wz-step__head{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom: 18px; }
+.wz-step__titles{ flex:1; min-width:0; }
+.wz-step__title{
+  font-family: var(--font-round); font-weight:800; color: var(--coral-700);
+  font-size: clamp(1.7rem, 7vw, 2.2rem); line-height:1.05; margin: 4px 0 4px;
+}
+.wz-step__sub{ margin:0; color: var(--texto-60); font-weight:700; font-size:.96rem; }
+.wz-pill{
+  display:inline-flex; align-items:center; gap:.4em;
+  font-family: var(--font-round); font-weight:800; font-size:.72rem;
+  letter-spacing:.06em; text-transform:uppercase;
+  color: var(--verde-700); background: #E7F2E6;
+  padding: 5px 11px; border-radius: var(--r-pill);
+}
+.wz-pill--opt{ color: var(--coral-700); background: var(--coral-tint); }
+
+/* etiqueta "elige 1" vs "elige varios" */
+.wz-kind{
+  flex:none;
+  font-family: var(--font-round); font-weight:800; font-size:.78rem;
+  padding: 7px 13px; border-radius: var(--r-pill);
+  white-space:nowrap; margin-top: 4px;
+}
+.wz-kind--one{ color: var(--texto); background:#fff; box-shadow: inset 0 0 0 2px var(--line); }
+.wz-kind--many{ color:#fff; background: var(--verde); }
+
+/* ---------- "Elige 1" = LISTA ---------- */
+.wz-list{ display:flex; flex-direction:column; gap: 12px; }
+.wz-row{
+  display:flex; align-items:center; gap: 14px;
+  background:#fff; border: 2.5px solid var(--line);
+  border-radius: var(--r-lg); padding: 18px 20px;
+  text-align:left; width:100%;
+  transition: border-color .18s, background .18s, transform .14s, box-shadow .2s;
+}
+.wz-row:hover{ border-color: var(--rosa); transform: translateY(-2px); box-shadow: var(--sh-sm); }
+.wz-row.is-on{ border-color: var(--coral); background: var(--coral-tint); box-shadow: var(--sh-sm); }
+.wz-row__radio{
+  flex:none; width: 26px; height:26px; border-radius:50%;
+  border: 2.5px solid var(--rosa); background:#fff;
+  display:grid; place-items:center; transition: border-color .18s, background .18s;
+  position:relative;
+}
+.wz-row.is-on .wz-row__radio{ border-color: var(--coral); background: var(--coral); }
+.wz-row.is-on .wz-row__radio::after{
+  content:''; width:10px; height:10px; border-radius:50%; background:#fff;
+}
+.wz-row__main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.wz-row__name{ font-family: var(--font-round); font-weight:800; color: var(--texto); font-size:1.18rem; }
+.wz-row__meta{ font-size:.86rem; color: var(--texto-60); font-weight:700; }
+.wz-row__price{ font-family: var(--font-round); font-weight:800; color: var(--coral); font-size:1.2rem; white-space:nowrap; }
+.wz-row__price--free{ color: var(--verde-700); font-size:.9rem; }
+.wz-row--none .wz-row__name{ color: var(--texto-60); }
+
+.wz-note{
+  background: #fff; border: 2px dashed var(--rosa);
+  border-radius: var(--r-md); padding: 13px 16px; margin: 0 0 16px;
+  color: var(--texto); font-size:.95rem; line-height:1.45;
+}
+.wz-note b{ color: var(--coral-700); }
+
+/* ---------- "Elige varios" = CHIPS + contador ---------- */
+.wz-counter{
+  display:flex; align-items:center; gap: 10px; flex-wrap:wrap;
+  background:#fff; border-radius: var(--r-pill);
+  padding: 11px 18px; margin-bottom: 18px;
+  box-shadow: var(--sh-sm); font-family: var(--font-round);
+}
+.wz-counter__seg{ font-weight:700; color: var(--texto); font-size:.95rem; }
+.wz-counter__seg b{ font-weight:800; color: var(--coral-700); font-size:1.05rem; }
+.wz-counter__seg.is-extra b{ color: var(--coral); }
+.wz-counter__seg em{ font-style:normal; color: var(--coral); font-weight:800; }
+.wz-counter__sep{ width:1px; height:18px; background: var(--line); }
+.wz-counter__incl{
+  margin-left:auto; font-size:.78rem; font-weight:800; letter-spacing:.04em;
+  color: var(--verde-700); background:#E7F2E6; padding:5px 11px; border-radius: var(--r-pill);
+}
+
+.wz-chips{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wz-chip{
+  display:flex; align-items:center; gap: 9px;
+  background:#fff; border: 2.5px solid var(--line);
+  border-radius: var(--r-md); padding: 14px 14px;
+  text-align:left; transition: border-color .16s, background .16s, transform .12s, box-shadow .18s;
+  position:relative; min-height: 56px;
+}
+.wz-chip:hover{ border-color: var(--rosa); transform: translateY(-2px); }
+.wz-chip.is-on{ border-color: var(--coral); background: var(--coral-tint); }
+.wz-chip.is-on.is-extra{ border-color: var(--coral); background: #fff; box-shadow: inset 0 0 0 2px var(--coral); }
+.wz-chip__tick{
+  flex:none; width:22px; height:22px; border-radius:50%;
+  border:2px solid var(--rosa); background:#fff; color:#fff;
+  display:grid; place-items:center; font-size:.7rem; transition: all .16s;
+}
+.wz-chip.is-on .wz-chip__tick{ background: var(--coral); border-color: var(--coral); }
+.wz-chip__tick svg{ opacity:0; transition: opacity .14s; }
+.wz-chip.is-on .wz-chip__tick svg{ opacity:1; }
+.wz-chip__name{ flex:1; min-width:0; font-family: var(--font-round); font-weight:700; color: var(--texto); font-size:.98rem; line-height:1.15; }
+.wz-chip__tag{
+  flex:none; font-family: var(--font-round); font-weight:800; font-size:.72rem;
+  padding: 4px 9px; border-radius: var(--r-pill); white-space:nowrap;
+}
+.wz-chip__tag--incl{ color: var(--verde-700); background:#E7F2E6; }
+.wz-chip__tag--extra{ color:#fff; background: var(--coral); }
+
+/* ---------- Barra inferior: TOTAL fijo ---------- */
+.wz-bar{
+  position: fixed; left:0; right:0; bottom:0; z-index: 55;
+  background:#fff; box-shadow: 0 -8px 26px rgba(200,70,95,.14);
+  padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+}
+.wz-bar__in{
+  max-width: 640px; display:flex; align-items:center; justify-content:space-between; gap: 14px;
+}
+.wz-bar__total{ display:flex; flex-direction:column; line-height:1; }
+.wz-bar__label{ font-size:.78rem; color: var(--texto-60); font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
+.wz-bar__num{ font-family: var(--font-round); font-weight:800; font-size:1.7rem; color: var(--coral); margin-top:3px; }
+.wz-bar__cta{ flex:none; }
+
+/* ---------- Confirmación ---------- */
+.wz-confirm{ text-align:center; max-width: 460px; margin-inline:auto; }
+.wz-confirm__art{ position:relative; display:grid; place-items:center; height: 220px; margin-bottom: 4px; }
+.wz-confirm__art img{ width: 200px; object-fit:contain; filter: drop-shadow(0 18px 26px rgba(200,70,95,.28)); animation: floaty 5s ease-in-out infinite; }
+.wz-confirm__spark{ position:absolute; top: 8px; right: 28%; font-size: 1.8rem; animation: floaty 3.6s ease-in-out infinite; }
+.wz-confirm__title{ font-size: clamp(2.4rem, 11vw, 3.2rem); margin: 0 0 .1em; }
+.wz-confirm__lead{ color: var(--texto-60); font-weight:600; margin: 0 0 22px; }
+
+.wz-receipt{ padding: 20px; text-align:left; }
+.wz-receipt__lines{ list-style:none; margin:0 0 14px; padding:0; display:grid; gap: 11px; }
+.wz-receipt__lines li{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.wz-receipt__lines span{ color: var(--texto); font-weight:600; }
+.wz-receipt__lines b{ font-family: var(--font-round); font-weight:800; color: var(--texto); white-space:nowrap; }
+.wz-receipt__lines .free{ color: var(--verde-700); font-weight:800; font-size:.9rem; }
+.wz-receipt__incl{ font-style:normal; color: var(--texto-60); font-size:.78rem; font-weight:700; }
+.wz-receipt__total{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; margin-bottom: 12px; border-top: 2px dashed var(--line); }
+.wz-receipt__total span:first-child{ font-family: var(--font-round); font-weight:800; font-size:1.2rem; color: var(--texto); }
+.wz-receipt__num{ font-family: var(--font-round); font-weight:800; font-size:1.9rem; color: var(--coral); }
+.wz-receipt .btn{ margin-top: 8px; }
+
+/* ---------- Desktop ---------- */
+@media (min-width: 720px){
+  .wz-chips{ grid-template-columns: repeat(3, 1fr); }
+  .wz-body__in{ padding-top: 36px; }
+}

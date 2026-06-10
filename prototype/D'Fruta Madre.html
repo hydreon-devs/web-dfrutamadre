@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>D'Fruta Madre · Fresas con crema a domicilio en Girardota</title>
+<meta name="description" content="Fresas con crema hechas en casa, a tu gusto. Pide a domicilio en Girardota por WhatsApp." />
+<link rel="stylesheet" href="ds.css" />
+<link rel="stylesheet" href="app.css" />
+<link rel="stylesheet" href="armador-wizard.css" />
+<link rel="stylesheet" href="checkout.css" />
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="app-data.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="armador.jsx"></script>
+<script type="text/babel" src="armador-wizard.jsx"></script>
+<script type="text/babel" src="checkout.jsx"></script>
+<script type="text/babel" src="landing.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "heroLayout": "split",
+  "accent": [
+    "#E84C6B",
+    "#7FB77E"
+  ],
+  "gingham": 35,
+  "ctaText": "Arma tus fresas",
+  "showFloaters": true,
+  "armadorStyle": "wizard"
+}/*EDITMODE-END*/;
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [view, setView] = useState('landing'); // landing | armador | cart | delivery | whatsapp
+  const [cart, setCart] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [delivery, setDelivery] = useState({ address: '', reference: '', payment: 'efectivo', cashWith: '' });
+  const idRef = React.useRef(1);
+
+  // Aplica tweaks a las variables CSS
+  useEffect(() => {
+    const r = document.documentElement;
+    r.style.setProperty('--coral', t.accent[0]);
+    r.style.setProperty('--verde', t.accent[1]);
+    // gingham 0–100 -> opacidad 0–0.85
+    r.style.setProperty('--gingham-opacity', (t.gingham / 100 * 0.85).toFixed(3));
+    document.body.classList.toggle('hero--centered', t.heroLayout === 'centered');
+    document.body.classList.toggle('no-floaters', !t.showFloaters);
+  }, [t]);
+
+  const openArmador = () => { setEditId(null); window.scrollTo(0, 0); setView('armador'); };
+  const editItem = (id) => { setEditId(id); window.scrollTo(0, 0); setView('armador'); };
+  const removeItem = (id) => setCart((c) => c.filter((x) => x.id !== id));
+  const addItem = (item) => {
+    setCart((c) => editId != null
+      ? c.map((x) => (x.id === editId ? { ...item, id: editId } : x))
+      : [...c, { ...item, id: idRef.current++ }]);
+    setEditId(null); window.scrollTo(0, 0); setView('cart');
+  };
+  const armadorBack = () => { setEditId(null); setView(cart.length ? 'cart' : 'landing'); };
+  const goCart = () => { window.scrollTo(0, 0); setView('cart'); };
+  const goDelivery = () => { window.scrollTo(0, 0); setView('delivery'); };
+  const goWhatsApp = () => { window.scrollTo(0, 0); setView('whatsapp'); };
+  const backToLanding = () => { setView('landing'); };
+
+  // ctaText override
+  useEffect(() => {
+    document.querySelectorAll('[data-cta-text]').forEach((el) => { el.textContent = t.ctaText; });
+  });
+
+  const renderView = () => {
+    if (view === 'landing') return <Landing onOpenArmador={openArmador} ctaText={t.ctaText} />;
+    if (view === 'armador') {
+      const initial = editId != null ? cart.find((x) => x.id === editId) : null;
+      return t.armadorStyle === 'wizard'
+        ? <ArmadorWizard onBack={armadorBack} onAdd={addItem} initial={initial} editMode={editId != null} />
+        : <Armador onBack={armadorBack} onAdd={addItem} />;
+    }
+    if (view === 'cart') return <CartView cart={cart} onEdit={editItem} onRemove={removeItem} onAddAnother={openArmador} onCheckout={goDelivery} onBack={backToLanding} />;
+    if (view === 'delivery') return <DeliveryView cart={cart} delivery={delivery} setDelivery={setDelivery} onBack={goCart} onSubmit={goWhatsApp} />;
+    if (view === 'whatsapp') return <WhatsAppView cart={cart} delivery={delivery} onBack={goDelivery} />;
+    return null;
+  };
+
+  return (
+    <React.Fragment>
+      <div key={view + t.armadorStyle + (editId == null ? 'new' : 'e' + editId)} className="view-fade-enter">
+        {renderView()}
+      </div>
+
+      <TweaksPanel>
+        <TweakSection label="Hero" />
+        <TweakRadio label="Layout del hero" value={t.heroLayout}
+          options={['split', 'centered']}
+          onChange={(v) => setTweak('heroLayout', v)} />
+        <TweakText label="Texto del CTA" value={t.ctaText}
+          onChange={(v) => setTweak('ctaText', v)} />
+        <TweakToggle label="Elementos flotantes" value={t.showFloaters}
+          onChange={(v) => setTweak('showFloaters', v)} />
+
+        <TweakSection label="Armador" />
+        <TweakRadio label="Estilo del armador" value={t.armadorStyle}
+          options={['wizard', 'página']}
+          onChange={(v) => setTweak('armadorStyle', v)} />
+
+        <TweakSection label="Marca" />
+        <TweakColor label="Acentos (coral · verde)" value={t.accent}
+          options={[
+            ['#E84C6B', '#7FB77E'],
+            ['#F36A85', '#5E9B5C'],
+            ['#E0407E', '#E8A33D'],
+            ['#D64161', '#6FA8DC']
+          ]}
+          onChange={(v) => setTweak('accent', v)} />
+        <TweakSlider label="Patrón gingham" value={t.gingham} min={0} max={100} step={5} unit="%"
+          onChange={(v) => setTweak('gingham', v)} />
+      </TweaksPanel>
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
