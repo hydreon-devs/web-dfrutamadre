@@ -94,7 +94,7 @@ export interface Resena {
   texto: string;
 }
 
-/** Reseñas de ejemplo — reemplazar por reales */
+/** Reseñas de ejemplo */
 export const RESENAS: Resena[] = [
   {
     nombre: "Laura M.",

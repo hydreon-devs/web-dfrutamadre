@@ -80,11 +80,11 @@ function EspecialCard({ p }: { p: Especial }) {
     <button type="button" onClick={mostrarAviso} className={cn(cardClasses, "text-left")}>
       {contenido}
       <span className="mt-3 font-round font-extrabold text-[.9rem] text-cacao-soft">
-        Disponible en nuestro punto físico 🏪
+        Disponible en nuestro punto físico
       </span>
       {aviso && (
         <span className="absolute inset-x-2.5 bottom-2.5 z-3 bg-coral text-white text-[.85rem] font-bold rounded-media px-3 py-2.5 shadow-fm-md">
-          Las obleas solo se venden en nuestro punto físico 🏪 {BRAND.direccion}
+          Las obleas solo se venden en nuestro punto físico {BRAND.direccion}
         </span>
       )}
     </button>
