@@ -92,7 +92,7 @@ export function App() {
       <div key={view + (editId == null ? "" : `-e${editId}`)} className="view-fade-enter">
         {renderView()}
       </div>
-      {view !== "armador" && <WhatsAppFab />}
+      {view !== "armador" && view !== "cart" && <WhatsAppFab />}
     </>
   );
 }
