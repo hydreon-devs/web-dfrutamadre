@@ -109,7 +109,7 @@ export function ProductCatalog({
   const total = items.reduce((acc, it) => acc + it.subtotal, 0);
 
   return (
-    <div className="min-h-dvh bg-crema pb-36">
+    <div className="min-h-dvh bg-crema pb-10">
       <header className="sticky top-0 z-40 bg-crema/90 backdrop-blur-md shadow-[0_4px_18px_rgb(200_70_95/0.08)]">
         <div className="container-fm flex items-center justify-between gap-3 py-2.5">
           <button
@@ -125,12 +125,17 @@ export function ProductCatalog({
       </header>
 
       <main className="container-fm max-w-[640px] pt-5">
-        {/* Indicador de carrito */}
+        {/* Botón de pedido */}
         {itemCount > 0 && (
-          <div className="mb-5 p-3 bg-coral text-white font-round font-extrabold text-center rounded-full shadow-fm-sm">
-            Productos en el carrito: {itemCount} — {formatPrecio(total)}
-          </div>
+          <button
+            type="button"
+            onClick={onVerPedido}
+            className="w-full mb-5 bg-coral text-white font-round font-extrabold text-[1.1rem] py-4 rounded-full shadow-fm-md transition-all hover:brightness-105 active:scale-[0.98]"
+          >
+            Ver pedido — {formatPrecio(total)}
+          </button>
         )}
+
         {/* Configurables */}
         <section className="mb-7">
           <h2 className="font-round font-extrabold text-coral-700 text-[1.15rem] mb-3">
@@ -168,20 +173,6 @@ export function ProductCatalog({
         </section>
       </main>
 
-      {/* Botón fijo de pedido */}
-      {itemCount > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-crema/95 backdrop-blur-md border-t border-linea/30 p-4">
-          <div className="container-fm max-w-[640px] mx-auto">
-            <button
-              type="button"
-              onClick={onVerPedido}
-              className="w-full bg-coral text-white font-round font-extrabold text-[1.1rem] py-4 rounded-full shadow-fm-md transition-all hover:brightness-105 active:scale-[0.98]"
-            >
-              Ver pedido — {formatPrecio(total)}
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
