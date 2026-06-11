@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/carlosqm-dev/dfruta-madre-landing/compare/v1.2.0...v1.2.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* **landing:** boton Ver pedido de la demo ya no se corta en mobile ([92ba09c](https://github.com/carlosqm-dev/dfruta-madre-landing/commit/92ba09c5fda6eb99d740a85ae0e8f86882963dc6))
+
 ## [1.2.0](https://github.com/carlosqm-dev/dfruta-madre-landing/compare/v1.1.0...v1.2.0) (2026-06-11)
 
 
