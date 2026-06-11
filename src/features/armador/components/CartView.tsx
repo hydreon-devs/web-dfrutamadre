@@ -1,27 +1,10 @@
 import type { ItemPedido, ItemPedidoConfigurable, ItemPedidoDirecto } from "../../../domain/builder/types";
 import { desglosarSeleccion, totalPedido } from "../../../domain/builder/pricing";
-import { productoDirectoPorId, productoPorId } from "../../../domain/menu";
+import { imgProducto, productoDirectoPorId, productoPorId } from "../../../domain/menu";
 import { formatPrecio } from "../../../shared/lib/format";
 import { Badge, Button, IconArrow, IconCart, IconEdit, IconPlus, IconTrash } from "../../../shared/ui";
 import { QuantityStepper } from "./QuantityStepper";
 import { CheckoutShell } from "./CheckoutShell";
-
-/* ─────────────── Assets ─────────────── */
-
-const IMG_PRODUCTO: Record<string, string> = {
-  "fresas-con-crema": "/assets/cup-fresas-con-crema.webp",
-  "duraznos-con-crema": "/assets/cup-duraznos.webp",
-  "salpiconada": "/assets/cup-salpiconada.webp",
-  "merengon": "/assets/merengon.webp",
-  "mermelada-fresa": "/assets/mascot-fresa.webp",
-  "vaso-crema": "/assets/mascot-fresa.webp",
-  "chococono": "/assets/mascot-fresa.webp",
-  "agua": "/assets/mascot-fresa.webp",
-};
-
-function itemImg(productoId: string): string {
-  return IMG_PRODUCTO[productoId] ?? "/assets/mascot-fresa.webp";
-}
 
 /* ─────────────── Props ─────────────── */
 
@@ -55,7 +38,7 @@ function ConfigurableCard({ item, index, onEdit, onRemove }: ConfigurableCardPro
     <article className="flex gap-3.5 bg-white rounded-card shadow-fm-sm p-3.5">
       <div className="grid place-items-center w-24 h-24 flex-none bg-blush rounded-media overflow-hidden">
         <img
-          src={itemImg(item.productoId)}
+          src={imgProducto(item.productoId)}
           alt=""
           className="w-[82%] h-[82%] object-contain drop-shadow-[0_6px_10px_rgb(200_70_95/0.18)]"
         />
@@ -130,7 +113,7 @@ function DirectoCard({ item, onRemove, onUpdateCantidad }: DirectoCardProps) {
     <article className="flex gap-3.5 bg-white rounded-card shadow-fm-sm p-3.5">
       <div className="grid place-items-center w-24 h-24 flex-none bg-blush rounded-media overflow-hidden">
         <img
-          src={itemImg(item.productoId)}
+          src={imgProducto(item.productoId)}
           alt=""
           className="w-[82%] h-[82%] object-contain drop-shadow-[0_6px_10px_rgb(200_70_95/0.18)]"
         />

@@ -4,6 +4,7 @@ import { salpiconada } from "./salpiconada";
 import type { Producto, ProductoArmador, ProductoDirecto } from "../builder/types";
 
 export { duraznosConCrema, fresasConCrema, salpiconada };
+export * from "./imagenes";
 export * from "./marca";
 
 /* ─────────────── Registro de productos a domicilio ─────────────── */
