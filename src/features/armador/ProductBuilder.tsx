@@ -64,7 +64,7 @@ export function ProductBuilder({ producto, initial, editMode, onBack, onSubmit }
   const ctaLabel = esUltimo ? (editMode ? "Guardar cambios" : "Agregar al pedido") : "Siguiente";
 
   return (
-    <div className="min-h-dvh bg-crema pb-28">
+    <div className="min-h-dvh bg-crema pb-10">
       {/* Top: volver + progreso */}
       <header className="sticky top-0 z-40 bg-crema/90 backdrop-blur-md shadow-[0_4px_18px_rgb(200_70_95/0.08)]">
         <div className="container-fm flex items-center justify-between gap-3 py-2.5">
@@ -130,11 +130,9 @@ export function ProductBuilder({ producto, initial, editMode, onBack, onSubmit }
             <PasoMultiView paso={paso} elegidas={seleccion[paso.id] ?? []} onToggle={toggleMulti} />
           )}
         </div>
-      </main>
 
-      {/* Barra inferior: total + acción */}
-      <footer className="fixed inset-x-0 bottom-0 z-55 bg-white shadow-[0_-8px_24px_rgb(200_70_95/0.14)]">
-        <div className="container-fm flex items-center justify-between gap-3 py-3">
+        {/* Total + acción */}
+        <footer className="mt-8 flex items-center justify-between gap-3 bg-white rounded-card shadow-fm-md px-4 py-3">
           <div className="flex flex-col">
             <span className="text-[.82rem] text-cacao-soft font-bold whitespace-nowrap">
               {esUltimo ? "Subtotal" : "Total"}
@@ -146,8 +144,8 @@ export function ProductBuilder({ producto, initial, editMode, onBack, onSubmit }
           <Button onClick={next} disabled={!completo} className={cn(!completo && "opacity-50")}>
             {ctaLabel} <IconArrow />
           </Button>
-        </div>
-      </footer>
+        </footer>
+      </main>
     </div>
   );
 }

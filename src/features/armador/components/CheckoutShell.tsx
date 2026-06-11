@@ -6,13 +6,13 @@ interface CheckoutShellProps {
   onBack: () => void;
   backLabel?: string;
   children: ReactNode;
-  /** Barra fija inferior opcional */
+  /** Sección de acciones opcional al final del contenido */
   bar?: ReactNode;
 }
 
 export function CheckoutShell({ titulo, onBack, backLabel = "Volver", children, bar }: CheckoutShellProps) {
   return (
-    <div className="min-h-dvh bg-crema pb-28">
+    <div className="min-h-dvh bg-crema pb-10">
       <header className="sticky top-0 z-40 bg-crema/90 backdrop-blur-md shadow-[0_4px_18px_rgb(200_70_95/0.08)]">
         <div className="container-fm flex items-center justify-between gap-3 py-2.5">
           <button
@@ -28,13 +28,14 @@ export function CheckoutShell({ titulo, onBack, backLabel = "Volver", children, 
         </div>
       </header>
 
-      <main className="container-fm max-w-[640px] pt-6">{children}</main>
-
-      {bar && (
-        <footer className="fixed inset-x-0 bottom-0 z-55 bg-white shadow-[0_-8px_24px_rgb(200_70_95/0.14)]">
-          <div className="container-fm flex items-center justify-between gap-3 py-3">{bar}</div>
-        </footer>
-      )}
+      <main className="container-fm max-w-[640px] pt-6">
+        {children}
+        {bar && (
+          <footer className="mt-8 flex items-center justify-between gap-3 bg-white rounded-card shadow-fm-md px-4 py-3">
+            {bar}
+          </footer>
+        )}
+      </main>
     </div>
   );
 }
