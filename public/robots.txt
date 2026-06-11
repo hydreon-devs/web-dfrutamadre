@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dfrutamadre.vercel.app/sitemap.xml

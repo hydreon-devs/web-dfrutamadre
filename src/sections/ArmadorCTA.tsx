@@ -44,6 +44,10 @@ export function ArmadorCTA({ onOpenArmador }: ArmadorCTAProps) {
             className="relative z-2 w-[clamp(210px,58vw,290px)] drop-shadow-[0_20px_26px_rgb(0_0_0/0.22)] animate-floaty"
             src="/assets/cup-fresas-con-crema.webp"
             alt="Fresas con crema personalizadas"
+            width={768}
+            height={1152}
+            loading="lazy"
+            decoding="async"
           />
           {[
             { label: "Oreo", pos: "top-[8%] left-[6%]", dur: "4s", delay: "0s" },

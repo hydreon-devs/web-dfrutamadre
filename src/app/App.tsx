@@ -11,6 +11,7 @@ import { usePedido } from "../features/armador/hooks/usePedido";
 import { ENTREGA_INICIAL, type DatosEntrega } from "../features/armador/types";
 import { formatPrecio } from "../shared/lib/format";
 import { WhatsAppFab } from "../shared/ui";
+import { JsonLd } from "./JsonLd";
 
 type View = "landing" | "catalog" | "armador" | "cart" | "delivery" | "whatsapp";
 
@@ -162,6 +163,7 @@ export function App() {
 
   return (
     <>
+      <JsonLd />
       <div key={view} className="view-fade-enter">
         {renderView()}
       </div>

@@ -68,6 +68,7 @@ export function Social() {
                   src={src}
                   alt={`Fresas con crema de @${BRAND.instagram} ${i + 1}`}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </a>

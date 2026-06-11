@@ -72,6 +72,9 @@ export function Hero({ onOpenArmador }: HeroProps) {
             className="relative z-2 w-[clamp(260px,74vw,350px)] min-[940px]:w-[clamp(420px,36vw,520px)] object-contain drop-shadow-[0_22px_32px_rgb(200_70_95/0.28)] animate-floaty"
             src="/assets/mascot-fresa.webp"
             alt="Mascota de D'Fruta Madre, una fresa sonriente"
+            width={768}
+            height={768}
+            fetchPriority="high"
           />
           {DECOS.map((d) => (
             <img
@@ -79,6 +82,9 @@ export function Hero({ onOpenArmador }: HeroProps) {
               src={d.img}
               alt=""
               aria-hidden="true"
+              width={768}
+              height={1152}
+              decoding="async"
               className={`absolute z-1 object-contain select-none pointer-events-none drop-shadow-[0_10px_16px_rgb(200_70_95/0.22)] animate-floaty ${d.className}`}
               style={{ animationDelay: d.delay, animationDuration: d.duration }}
             />

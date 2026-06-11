@@ -6,6 +6,8 @@
 export const BRAND = {
   nombre: "D'Fruta Madre",
   tagline: "Fresas con crema a domicilio en Girardota",
+  /** URL pública del sitio; cambiarla aquí y en index.html cuando haya dominio propio */
+  siteUrl: "https://dfrutamadre.vercel.app",
   instagram: "fresas.de.girardota",
   instagramUrl: "https://instagram.com/fresas.de.girardota",
   telefonoDisplay: "+57 300 841 53 68",
