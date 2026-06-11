@@ -28,7 +28,7 @@ export function Info() {
               Dirección
             </h3>
             <p className="text-cacao-soft leading-normal">
-              Domicilios <b className="text-cacao">solo en Girardota</b>
+              Domicilios: <b className="text-cacao">solo en Girardota</b>
               <br />
               Punto físico: <b className="text-cacao">{BRAND.direccion}</b>
             </p>

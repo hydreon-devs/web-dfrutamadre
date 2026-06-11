@@ -1,8 +1,4 @@
-import { BRAND } from "../domain/menu";
-import { buildWaUrl } from "../shared/lib/whatsapp";
-import { Badge, Button, Drip, IconArrow, IconClock, IconPin, IconWhatsApp } from "../shared/ui";
-
-const SALUDO = "¡Hola D'Fruta Madre! 🍓 Quiero hacer un pedido a domicilio.";
+import { Badge, Button, Drip, IconArrow, IconClock, IconPin } from "../shared/ui";
 
 interface HeroProps {
   onOpenArmador: () => void;
@@ -21,7 +17,7 @@ export function Hero({ onOpenArmador }: HeroProps) {
 
       <div className="container-fm relative grid grid-cols-1 gap-4.5 items-center min-[940px]:grid-cols-[1.05fr_.95fr] min-[940px]:gap-5">
         <div className="relative z-2 text-center min-[940px]:text-left">
-          <Badge variant="green">🍓 Hechas en casa, a tu gusto</Badge>
+          <Badge variant="green" className="mb-6">🍓 Hechas en casa, a tu gusto</Badge>
           <h1 className="display-brand text-[clamp(3.4rem,17vw,6rem)] min-[1100px]:text-[6.4rem] mt-2 mb-2">
             Deliciosas
             <br />fresas con crema
@@ -33,15 +29,6 @@ export function Hero({ onOpenArmador }: HeroProps) {
           <div className="mt-6.5 flex flex-col items-center gap-3 min-[720px]:flex-row min-[720px]:justify-center min-[940px]:justify-start">
             <Button size="hero" onClick={onOpenArmador} className="w-[min(360px,100%)] min-[720px]:w-auto">
               Arma tu pedido <IconArrow />
-            </Button>
-            <Button
-              variant="secondary"
-              href={buildWaUrl(BRAND.telefonoIntl, SALUDO)}
-              target="_blank"
-              rel="noopener"
-              className="w-[min(360px,100%)] min-[720px]:w-auto"
-            >
-              <IconWhatsApp /> Pedir por WhatsApp
             </Button>
           </div>
 

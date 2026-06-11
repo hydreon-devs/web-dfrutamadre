@@ -1,4 +1,4 @@
-import { Badge, Button, Drip, IconArrow } from "../shared/ui";
+import { Button, Drip, IconArrow } from "../shared/ui";
 import { PhoneShowcase } from "./PhoneShowcase";
 
 interface ArmadorCTAProps {
@@ -14,15 +14,14 @@ export function ArmadorCTA({ onOpenArmador }: ArmadorCTAProps) {
 
       <div className="container-fm relative z-2 grid grid-cols-1 gap-7.5 items-center min-[940px]:grid-cols-[1.1fr_.9fr]">
         <div className="text-center min-[940px]:text-left" data-reveal>
-          <Badge variant="light">★ Lo más pedido</Badge>
           <h2 className="display-brand text-white text-[clamp(3rem,14vw,5rem)] my-2 [text-shadow:0_6px_0_rgb(0_0_0/0.08)]">
             Arma tu pedido
             <br />
             a tu gusto
           </h2>
-          <p className="text-[1.12rem] leading-normal font-semibold text-white/95 max-w-[34ch] mx-auto mb-6.5 min-[940px]:mx-0">
-            Tú mandas: tamaño, salsa y todos los toppings que quieras. El total se calcula al
-            instante y te lo dejamos listo para enviar por WhatsApp.
+          <p className="text-[1.12rem] leading-normal font-semibold text-white/95 max-w-[34ch] mx-auto mb-6.5 mt-6 min-[940px]:mx-0">
+          Personaliza tu pedido a tu manera: tamaño, salsa y toppings. 
+          En segundos tendrás un mensaje listo para enviarnos por WhatsApp
           </p>
           <Button
             size="hero"
@@ -32,7 +31,7 @@ export function ArmadorCTA({ onOpenArmador }: ArmadorCTAProps) {
             Arma tu pedido <IconArrow />
           </Button>
           <p className="mt-3.5 text-[.9rem] font-bold text-white/80">
-            Sin cuentas, sin pagos online. Pides en 30 segundos.
+          Del negocio a tus manos, como tú lo quieres.
           </p>
         </div>
 
