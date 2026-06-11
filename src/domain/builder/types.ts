@@ -13,6 +13,8 @@ export interface Opcion {
   meta?: string;
   /** Precio que aporta la opción (solo en pasos `single` que definen base) */
   precio?: number;
+  /** Título de grupo: las opciones contiguas con el mismo valor se muestran bajo ese encabezado */
+  grupo?: string;
 }
 
 interface PasoBase {

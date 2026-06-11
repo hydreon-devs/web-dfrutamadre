@@ -2,7 +2,8 @@ import type { Producto } from "../builder/types";
 
 /**
  * Duraznos con crema: paso 1 tamaño (define base), paso 2 topping
- * (single, 1 incluido sin costo, clásicos y premium fusionados).
+ * (single, 1 incluido sin costo, clásicos y premium fusionados
+ * pero separados visualmente vía `grupo`).
  */
 export const duraznosConCrema: Producto = {
   id: "duraznos-con-crema",
@@ -31,24 +32,24 @@ export const duraznosConCrema: Producto = {
       etiqueta: "Topping",
       preseleccion: "queso",
       opciones: [
-        { id: "queso", label: "Queso" },
-        { id: "durazno", label: "Durazno" },
-        { id: "chocorramito", label: "Chocorramito" },
-        { id: "gansito", label: "Gansito" },
-        { id: "pinguino", label: "Pingüino" },
-        { id: "helado", label: "Helado", meta: "pregunta por el sabor" },
-        { id: "galleta-mantequilla", label: "Galleta de Mantequilla" },
-        { id: "galleta-waffer", label: "Galleta Waffer" },
-        { id: "masmelos", label: "Masmelos" },
-        { id: "mermelada-fresa", label: "Mermelada de Fresa" },
-        { id: "chispas-chocolate", label: "Chispitas de Chocolate" },
-        { id: "chispas-colores", label: "Chispitas de Colores" },
-        { id: "gelatina", label: "Gelatina" },
-        { id: "oreo", label: "Oreo" },
-        { id: "milo", label: "Milo" },
-        { id: "zucaritas", label: "Zucaritas" },
-        { id: "mani", label: "Maní" },
-        { id: "merenguitos", label: "Merenguitos" },
+        { id: "queso", label: "Queso", grupo: "Premium" },
+        { id: "durazno", label: "Durazno", grupo: "Premium" },
+        { id: "chocorramito", label: "Chocorramito", grupo: "Premium" },
+        { id: "gansito", label: "Gansito", grupo: "Premium" },
+        { id: "pinguino", label: "Pingüino", grupo: "Premium" },
+        { id: "helado", label: "Helado", meta: "pregunta por el sabor", grupo: "Premium" },
+        { id: "galleta-mantequilla", label: "Galleta de Mantequilla", grupo: "Clásicos" },
+        { id: "galleta-waffer", label: "Galleta Waffer", grupo: "Clásicos" },
+        { id: "masmelos", label: "Masmelos", grupo: "Clásicos" },
+        { id: "mermelada-fresa", label: "Mermelada de Fresa", grupo: "Clásicos" },
+        { id: "chispas-chocolate", label: "Chispitas de Chocolate", grupo: "Clásicos" },
+        { id: "chispas-colores", label: "Chispitas de Colores", grupo: "Clásicos" },
+        { id: "gelatina", label: "Gelatina", grupo: "Clásicos" },
+        { id: "oreo", label: "Oreo", grupo: "Clásicos" },
+        { id: "milo", label: "Milo", grupo: "Clásicos" },
+        { id: "zucaritas", label: "Zucaritas", grupo: "Clásicos" },
+        { id: "mani", label: "Maní", grupo: "Clásicos" },
+        { id: "merenguitos", label: "Merenguitos", grupo: "Clásicos" },
       ],
     },
   ],
