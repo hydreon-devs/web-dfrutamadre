@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/carlosqm-dev/dfruta-madre-landing/compare/v1.1.0...v1.2.0) (2026-06-11)
+
+
+### Features
+
+* **landing:** reordenar secciones y refocalizar el Hero ([e199c48](https://github.com/carlosqm-dev/dfruta-madre-landing/commit/e199c488ddfa74b360f8b70512da08af9db9b6f5))
+* **landing:** tap simulado en botón Ver pedido al cierre del armado ([ba7137f](https://github.com/carlosqm-dev/dfruta-madre-landing/commit/ba7137fbd794aa2fa9481617bd27d10ae12c2fa4))
+* **landing:** teléfono animado con demo del flujo del pedido en ArmadorCTA ([766e933](https://github.com/carlosqm-dev/dfruta-madre-landing/commit/766e933c4345800c25f539af544bf24048c0de42))
+
+
+### Bug Fixes
+
+* **landing:** titular del CTA del armador ahora dice "Arma tu pedido a tu gusto" ([c648cac](https://github.com/carlosqm-dev/dfruta-madre-landing/commit/c648cacd7cbfed9541627c2ffe497fdfc04b9aa5))
+
 ## [1.1.0](https://github.com/carlosqm-dev/dfruta-madre-landing/compare/v1.0.0...v1.1.0) (2026-06-11)
 
 
