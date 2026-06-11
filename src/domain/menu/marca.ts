@@ -35,14 +35,8 @@ export interface Especial {
 
 /** Otros antojos del menú (no entran al armador por ahora) */
 export const ESPECIALES: Especial[] = [
-  {
-    id: "merengon",
-    nombre: "Merengón D'Fruta Madre",
-    desc: "Crema de la casa, fresa, durazno, mermelada de fresa y merengue.",
-    img: "/assets/merengon.webp",
-    precios: [{ label: "Porción", precio: 15000 }],
-    waMensaje: "¡Hola D'Fruta Madre! 🍓 Quiero pedir un Merengón D'Fruta Madre a domicilio.",
-  },
+
+  /** --- Especiales que solo se venden en punto físico --- */
   {
     id: "oblea",
     nombre: "Oblea pa' antojarse",
@@ -52,6 +46,16 @@ export const ESPECIALES: Especial[] = [
       { label: "Individual", precio: 8000 },
     ],
     tag: "Solo en punto físico",
+  },
+
+  /** --- Especiales que se venden a domicilio --- */
+  {
+    id: "merengon",
+    nombre: "Merengón D'Fruta Madre",
+    desc: "Crema de la casa, fresa, durazno, mermelada de fresa y merengue.",
+    img: "/assets/merengon.webp",
+    precios: [{ label: "Porción", precio: 15000 }],
+    waMensaje: "¡Hola D'Fruta Madre! 🍓 Quiero pedir un Merengón D'Fruta Madre a domicilio.",
   },
   {
     id: "salpiconada",

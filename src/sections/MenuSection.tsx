@@ -207,7 +207,7 @@ export function MenuSection() {
           </div>
         </div>
 
-        {/* Especiales */}
+        {/* Especiales - Otros antojos */}
         <div className="mt-11" data-reveal>
           <h3 className="font-round font-extrabold text-coral-700 text-2xl mb-0.5">
             Otros antojos
