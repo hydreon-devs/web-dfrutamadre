@@ -29,11 +29,13 @@ export interface Especial {
   img: string;
   precios: PrecioEspecial[];
   tag?: string;
-  /** Mensaje de WhatsApp para pedirlo a domicilio; sin él, solo se vende en punto físico */
+  /** Id del producto en el registro del armador; la card lo arma o lo agrega al pedido */
+  armadorId?: string;
+  /** Mensaje de WhatsApp para pedirlo a domicilio (fallback si no hay armadorId); sin ninguno, solo punto físico */
   waMensaje?: string;
 }
 
-/** Otros antojos del menú (no entran al armador por ahora) */
+/** Otros antojos del menú; los que tienen armadorId entran al flujo del armador */
 export const ESPECIALES: Especial[] = [
 
   /** --- Especiales que solo se venden en punto físico --- */
@@ -55,7 +57,7 @@ export const ESPECIALES: Especial[] = [
     desc: "Crema de la casa, fresa, durazno, mermelada de fresa y merengue.",
     img: "/assets/merengon.webp",
     precios: [{ label: "Porción", precio: 15000 }],
-    waMensaje: "¡Hola D'Fruta Madre! 🍓 Quiero pedir un Merengón D'Fruta Madre a domicilio.",
+    armadorId: "merengon",
   },
   {
     id: "salpiconada",
@@ -67,7 +69,7 @@ export const ESPECIALES: Especial[] = [
       { label: "Con queso o helado", precio: 12000 },
       { label: "Con ambos", precio: 15000 },
     ],
-    waMensaje: "¡Hola D'Fruta Madre! 🍍 Quiero pedir una Salpiconada a domicilio.",
+    armadorId: "salpiconada",
   },
   {
     id: "duraznos",
@@ -79,7 +81,7 @@ export const ESPECIALES: Especial[] = [
       { label: "16 oz", precio: 22000 },
       { label: "24 oz", precio: 28000 },
     ],
-    waMensaje: "¡Hola D'Fruta Madre! 🍑 Quiero pedir Duraznos con crema a domicilio.",
+    armadorId: "duraznos-con-crema",
   },
 ];
 

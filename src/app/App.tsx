@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Producto, Seleccion } from "../domain/builder/types";
+import { seleccionInicial } from "../domain/builder/validation";
 import { productoPorId } from "../domain/menu";
 import { Landing } from "../sections/Landing";
 import { ProductBuilder } from "../features/armador/ProductBuilder";
@@ -21,6 +22,10 @@ export function App() {
   const [editId, setEditId] = useState<number | null>(null);
   /** El producto que se está armando en el wizard. */
   const [wizardProducto, setWizardProducto] = useState<Producto | null>(null);
+  /** Selección inicial del wizard al entrar desde el menú de la landing. */
+  const [wizardInitial, setWizardInitial] = useState<Seleccion | null>(null);
+  /** Desde dónde se abrió el wizard, para que "Volver" regrese ahí. */
+  const [wizardOrigin, setWizardOrigin] = useState<"landing" | "catalog">("catalog");
   const [entrega, setEntrega] = useState<DatosEntrega>(ENTREGA_INICIAL);
   const pedido = usePedido();
 
@@ -38,8 +43,37 @@ export function App() {
 
   const startWizard = (producto: Producto) => {
     setWizardProducto(producto);
+    setWizardInitial(null);
+    setWizardOrigin("catalog");
     setEditId(null);
     go("armador");
+  };
+
+  /** Abre el wizard desde el menú de la landing, con opciones preseleccionadas (ej. tamaño). */
+  const armarDesdeLanding = (productoId: string, preseleccion?: Record<string, string>) => {
+    const producto = productoPorId(productoId);
+    if (!producto) return;
+    const inicial = seleccionInicial(producto);
+    for (const [pasoId, opcionId] of Object.entries(preseleccion ?? {})) {
+      inicial[pasoId] = [opcionId];
+    }
+    setWizardProducto(producto);
+    setWizardInitial(inicial);
+    setWizardOrigin("landing");
+    setEditId(null);
+    go("armador");
+  };
+
+  /** Suma 1 unidad de un producto directo desde la landing, sin salir de ella. */
+  const agregarDirectoDesdeLanding = (productoId: string) => {
+    const existente = pedido.items.find(
+      (it) => it.tipo === "directo" && it.productoId === productoId,
+    );
+    if (existente?.tipo === "directo") {
+      pedido.actualizarDirecto(existente.id, existente.cantidad + 1);
+    } else {
+      pedido.agregarDirecto(productoId, 1);
+    }
   };
 
   const editItem = (id: number) => {
@@ -62,13 +96,16 @@ export function App() {
     }
     setEditId(null);
     setWizardProducto(null);
+    setWizardInitial(null);
     go("cart");
   };
 
   const armadorBack = () => {
     setEditId(null);
     setWizardProducto(null);
-    setView(pedido.items.length ? "cart" : "catalog");
+    setWizardInitial(null);
+    if (wizardOrigin === "landing") setView("landing");
+    else setView(pedido.items.length ? "cart" : "catalog");
   };
 
   const updateDirecto = (productoId: string, cantidad: number) => {
@@ -97,7 +134,13 @@ export function App() {
   const renderView = () => {
     switch (view) {
       case "landing":
-        return <Landing onOpenArmador={openCatalog} />;
+        return (
+          <Landing
+            onOpenArmador={openCatalog}
+            onArmarProducto={armarDesdeLanding}
+            onAgregarDirecto={agregarDirectoDesdeLanding}
+          />
+        );
 
       case "catalog":
         return (
@@ -117,7 +160,7 @@ export function App() {
             initial={
               itemEnEdicion?.tipo === "configurable"
                 ? itemEnEdicion.seleccion
-                : undefined
+                : wizardInitial ?? undefined
             }
             editMode={editId != null}
             onBack={armadorBack}

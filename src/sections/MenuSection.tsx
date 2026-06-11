@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { BRAND, ESPECIALES, OTROS, fresasConCrema } from "../domain/menu";
+import {
+  BRAND,
+  ESPECIALES,
+  OTROS,
+  fresasConCrema,
+  productoDirectoPorId,
+  productoPorId,
+} from "../domain/menu";
 import type { Especial } from "../domain/menu";
 import type { PasoMulti, PasoSingle } from "../domain/builder/types";
 import { formatPrecio } from "../shared/lib/format";
@@ -14,16 +21,22 @@ const premium = fresasConCrema.pasos.find((p) => p.id === "premium") as PasoMult
 
 const escalaTamano: Record<string, number> = { peq: 0.78, med: 0.92, gra: 1.1 };
 
-function EspecialCard({ p }: { p: Especial }) {
+interface EspecialCardProps {
+  p: Especial;
+  onArmarProducto: (productoId: string, preseleccion?: Record<string, string>) => void;
+  onAgregarDirecto: (productoId: string) => void;
+}
+
+function EspecialCard({ p, onArmarProducto, onAgregarDirecto }: EspecialCardProps) {
   const [aviso, setAviso] = useState(false);
   const timerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(timerRef.current), []);
 
-  const mostrarAviso = () => {
+  const mostrarAviso = (ms = 4000) => {
     window.clearTimeout(timerRef.current);
     setAviso(true);
-    timerRef.current = window.setTimeout(() => setAviso(false), 4000);
+    timerRef.current = window.setTimeout(() => setAviso(false), ms);
   };
 
   const cardClasses =
@@ -64,6 +77,47 @@ function EspecialCard({ p }: { p: Especial }) {
     </>
   );
 
+  const configurable = p.armadorId ? productoPorId(p.armadorId) : undefined;
+  const directo = p.armadorId ? productoDirectoPorId(p.armadorId) : undefined;
+
+  if (configurable) {
+    return (
+      <button
+        type="button"
+        onClick={() => onArmarProducto(configurable.id)}
+        className={cn(cardClasses, "text-left")}
+      >
+        {contenido}
+        <span className="mt-3 font-round font-extrabold text-[.9rem] text-coral">
+          Armar a tu gusto →
+        </span>
+      </button>
+    );
+  }
+
+  if (directo) {
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          onAgregarDirecto(directo.id);
+          mostrarAviso(2000);
+        }}
+        className={cn(cardClasses, "text-left")}
+      >
+        {contenido}
+        <span className="mt-3 font-round font-extrabold text-[.9rem] text-coral">
+          Agregar al pedido →
+        </span>
+        {aviso && (
+          <span className="absolute inset-x-2.5 bottom-2.5 z-3 bg-coral text-white text-[.85rem] font-bold rounded-media px-3 py-2.5 shadow-fm-md">
+            ¡Agregado al pedido! 🛒
+          </span>
+        )}
+      </button>
+    );
+  }
+
   if (p.waMensaje) {
     return (
       <a
@@ -81,7 +135,7 @@ function EspecialCard({ p }: { p: Especial }) {
   }
 
   return (
-    <button type="button" onClick={mostrarAviso} className={cn(cardClasses, "text-left")}>
+    <button type="button" onClick={() => mostrarAviso()} className={cn(cardClasses, "text-left")}>
       {contenido}
       <span className="mt-3 font-round font-extrabold text-[.9rem] text-cacao-soft">
         Disponible en nuestro punto físico
@@ -108,7 +162,14 @@ function ChipStatic({ children, prem }: { children: string; prem?: boolean }) {
   );
 }
 
-export function MenuSection() {
+interface MenuSectionProps {
+  /** Abre el wizard de un producto configurable, con opciones preseleccionadas (ej. tamaño) */
+  onArmarProducto: (productoId: string, preseleccion?: Record<string, string>) => void;
+  /** Suma 1 unidad de un producto directo al pedido */
+  onAgregarDirecto: (productoId: string) => void;
+}
+
+export function MenuSection({ onArmarProducto, onAgregarDirecto }: MenuSectionProps) {
   return (
     <section className="relative bg-crema py-[clamp(48px,9vw,96px)]" id="menu">
       <div className="container-fm">
@@ -130,8 +191,10 @@ export function MenuSection() {
           <p className="text-cacao-soft font-semibold mb-4">Elige tamaño y ármalas como quieras.</p>
           <div className="grid grid-cols-3 gap-3 min-[940px]:gap-4.5">
             {tamanos.opciones.map((t) => (
-              <article
+              <button
                 key={t.id}
+                type="button"
+                onClick={() => onArmarProducto(fresasConCrema.id, { tamano: t.id })}
                 className="bg-white rounded-card shadow-fm-sm border-2 border-transparent px-2.5 pt-3.5 pb-4.5 text-center transition-all hover:-translate-y-1 hover:shadow-fm-md hover:border-rosa-soft"
               >
                 <div className="grid place-items-center aspect-square bg-blush rounded-media overflow-hidden mb-2.5">
@@ -151,7 +214,10 @@ export function MenuSection() {
                 <p className="font-round font-extrabold text-coral text-[1.25rem]">
                   {formatPrecio(t.precio ?? 0)}
                 </p>
-              </article>
+                <span className="mt-1.5 inline-block font-round font-extrabold text-[.9rem] text-coral">
+                  Armar →
+                </span>
+              </button>
             ))}
           </div>
         </div>
@@ -215,7 +281,12 @@ export function MenuSection() {
           <p className="text-cacao-soft font-semibold mb-4">De la casa, para variar.</p>
           <div className="grid grid-cols-2 gap-3.5 min-[940px]:grid-cols-4">
             {ESPECIALES.map((p) => (
-              <EspecialCard key={p.id} p={p} />
+              <EspecialCard
+                key={p.id}
+                p={p}
+                onArmarProducto={onArmarProducto}
+                onAgregarDirecto={onAgregarDirecto}
+              />
             ))}
           </div>
         </div>
