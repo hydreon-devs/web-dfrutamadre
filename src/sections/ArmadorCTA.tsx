@@ -16,9 +16,9 @@ export function ArmadorCTA({ onOpenArmador }: ArmadorCTAProps) {
         <div className="text-center min-[940px]:text-left" data-reveal>
           <Badge variant="light">★ Lo más pedido</Badge>
           <h2 className="display-brand text-white text-[clamp(3rem,14vw,5rem)] my-2 [text-shadow:0_6px_0_rgb(0_0_0/0.08)]">
-            Arma tu
+            Arma tu pedido
             <br />
-            pedido
+            a tu gusto
           </h2>
           <p className="text-[1.12rem] leading-normal font-semibold text-white/95 max-w-[34ch] mx-auto mb-6.5 min-[940px]:mx-0">
             Tú mandas: tamaño, salsa y todos los toppings que quieras. El total se calcula al
