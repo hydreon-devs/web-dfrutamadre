@@ -26,9 +26,9 @@ function precioDesde(producto: Producto): number {
 /**
  * Secuencia de la demo, por índice de paso:
  *   0 catálogo · 1 tap en Fresas · 2-5 pasos del armado completándose ·
- *   6 resumen · 7 tap en Enviar → vuelve a 0.
+ *   6 tap en Ver pedido · 7 resumen · 8 tap en Enviar → vuelve a 0.
  */
-const DURACIONES_MS = [1500, 900, 1000, 900, 900, 1100, 1700, 2000];
+const DURACIONES_MS = [1500, 900, 1000, 900, 900, 1100, 900, 1700, 2000];
 
 /** Con prefers-reduced-motion el loop sigue, pero más lento y solo con crossfade. */
 const FACTOR_REDUCIDO = 1.6;
@@ -73,7 +73,7 @@ export function PhoneShowcase() {
     return () => clearTimeout(t);
   }, [paso, visible, reducido]);
 
-  const escena = paso <= 1 ? "catalogo" : paso <= 5 ? "armado" : "resumen";
+  const escena = paso <= 1 ? "catalogo" : paso <= 6 ? "armado" : "resumen";
 
   return (
     <div
@@ -165,6 +165,22 @@ export function PhoneShowcase() {
             </div>
           );
         })}
+        <div
+          className={cn(
+            "relative mt-auto transition-opacity duration-300",
+            escena !== "armado" || paso >= 5 ? "opacity-100" : "opacity-0",
+          )}
+        >
+          <span
+            className={cn(
+              "flex items-center justify-center w-full rounded-full bg-coral text-white font-round font-extrabold text-[.8rem] min-[940px]:text-[.92rem] py-2.5 min-[940px]:py-3 shadow-fm-sm transition-transform duration-300",
+              paso === 6 && "scale-[.96] motion-reduce:scale-100",
+            )}
+          >
+            Ver pedido
+          </span>
+          {paso === 6 && <Tap className="right-8 top-1/2 -translate-y-1/2" />}
+        </div>
       </Escena>
 
       {/* Escena 3: resumen del pedido + enviar */}
@@ -202,12 +218,12 @@ export function PhoneShowcase() {
           <span
             className={cn(
               "flex items-center justify-center gap-1.5 w-full rounded-full bg-wa text-wa-ink font-round font-extrabold text-[.8rem] min-[940px]:text-[.92rem] py-2.5 min-[940px]:py-3 transition-transform duration-300",
-              paso === 7 && "scale-[.96] motion-reduce:scale-100",
+              paso === 8 && "scale-[.96] motion-reduce:scale-100",
             )}
           >
             <IconWhatsApp className="text-[1rem]" /> Enviar pedido
           </span>
-          {paso === 7 && <Tap className="right-8 top-1/2 -translate-y-1/2" />}
+          {paso === 8 && <Tap className="right-8 top-1/2 -translate-y-1/2" />}
         </div>
       </Escena>
     </div>
