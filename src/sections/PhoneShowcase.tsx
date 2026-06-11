@@ -78,7 +78,7 @@ export function PhoneShowcase() {
   return (
     <div
       ref={ref}
-      className="relative z-2 w-[clamp(205px,52vw,245px)] min-[940px]:w-[300px] aspect-[9/19] rounded-[46px] min-[940px]:rounded-[54px] border-[9px] min-[940px]:border-[11px] border-[#2a171d] bg-blush shadow-fm-lg overflow-hidden"
+      className="relative z-2 w-[clamp(218px,56vw,245px)] min-[940px]:w-[300px] aspect-[9/19] rounded-[46px] min-[940px]:rounded-[54px] border-[9px] min-[940px]:border-[11px] border-[#2a171d] bg-blush shadow-fm-lg overflow-hidden"
       aria-hidden="true"
     >
       {/* Barra de estado + isla dinámica */}
@@ -135,7 +135,7 @@ export function PhoneShowcase() {
             <div
               key={d.paso.id}
               className={cn(
-                "bg-white rounded-2xl shadow-fm-sm px-3.5 py-2.5 transition-all duration-300",
+                "bg-white rounded-2xl shadow-fm-sm px-3 py-2 min-[940px]:px-3.5 min-[940px]:py-2.5 transition-all duration-300",
                 hecha ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 motion-reduce:translate-y-0",
               )}
             >
@@ -147,17 +147,17 @@ export function PhoneShowcase() {
                   {d.paso.etiqueta}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1 min-[940px]:gap-1.5">
                 {d.labels.map((label) => (
                   <span
                     key={label}
-                    className="font-round font-bold text-[.72rem] min-[940px]:text-[.8rem] text-coral-700 bg-coral-tint px-2.5 py-0.5 rounded-full"
+                    className="font-round font-bold text-[.68rem] min-[940px]:text-[.8rem] text-coral-700 bg-coral-tint px-2 min-[940px]:px-2.5 py-0.5 rounded-full"
                   >
                     {label}
                   </span>
                 ))}
                 {d.base > 0 && (
-                  <span className="font-round font-bold text-[.72rem] min-[940px]:text-[.8rem] text-verde-700 bg-verde-tint px-2.5 py-0.5 rounded-full">
+                  <span className="font-round font-bold text-[.68rem] min-[940px]:text-[.8rem] text-verde-700 bg-verde-tint px-2 min-[940px]:px-2.5 py-0.5 rounded-full">
                     {formatPrecio(d.base)}
                   </span>
                 )}
@@ -173,7 +173,7 @@ export function PhoneShowcase() {
         >
           <span
             className={cn(
-              "flex items-center justify-center w-full rounded-full bg-coral text-white font-round font-extrabold text-[.8rem] min-[940px]:text-[.92rem] py-2.5 min-[940px]:py-3 shadow-fm-sm transition-transform duration-300",
+              "flex items-center justify-center w-full rounded-full bg-coral text-white font-round font-extrabold text-[.8rem] min-[940px]:text-[.92rem] py-2 min-[940px]:py-3 shadow-fm-sm transition-transform duration-300",
               paso === 6 && "scale-[.96] motion-reduce:scale-100",
             )}
           >
@@ -234,7 +234,7 @@ function Escena({ activa, children }: { activa: boolean; children: ReactNode }) 
   return (
     <div
       className={cn(
-        "absolute inset-0 flex flex-col gap-2.5 min-[940px]:gap-3 px-3.5 min-[940px]:px-4 pt-11 min-[940px]:pt-13 pb-5 transition-all duration-500 motion-reduce:duration-[900ms]",
+        "absolute inset-0 flex flex-col gap-2 min-[940px]:gap-3 px-3.5 min-[940px]:px-4 pt-10 min-[940px]:pt-13 pb-4 min-[940px]:pb-5 transition-all duration-500 motion-reduce:duration-[900ms]",
         activa ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 motion-reduce:translate-y-0",
       )}
     >
