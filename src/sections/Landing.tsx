@@ -19,9 +19,9 @@ export function Landing({ onOpenArmador }: LandingProps) {
     <div ref={reveal}>
       <Header />
       <Hero onOpenArmador={onOpenArmador} />
-      <MenuSection />
-      <ArmadorCTA onOpenArmador={onOpenArmador} />
       <ComoPedir />
+      <ArmadorCTA onOpenArmador={onOpenArmador} />
+      <MenuSection />
       <Social />
       <Info />
       <Footer onOpenArmador={onOpenArmador} />
