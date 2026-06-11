@@ -49,3 +49,23 @@ recorta contra el marco (`overflow: hidden`), como en askape.com.
 - Mano PNG (Capa 3) — se puede agregar luego sin tocar el resto.
 - Interactividad dentro del teléfono.
 - Dependencias o librerías nuevas.
+
+## Revisión v2 (mismo día): simulación del flujo en loop
+
+Tras ver la v1, el usuario pidió que el teléfono simule la interacción real.
+Decisión: **3 escenas en loop (~10s)** — se descartó simular el tap en
+"Arma tu pedido" porque el botón real está al lado en la misma sección.
+
+1. **Catálogo** — productos configurables reales con "Desde $…", tap simulado
+   sobre Fresas con crema.
+2. **Armado** — los 4 pasos se completan solos (chips seleccionados + precio base).
+3. **Resumen** — desglose, total y botón "Enviar pedido" con tap final.
+
+Cambio de técnica: la narrativa es temporal, no espacial, así que se abandona
+el scroll-driven (`view()`) por una máquina de estados con `setTimeout`
+(`DURACIONES_MS`, 8 pasos). El loop arranca al entrar al viewport
+(IntersectionObserver propio), se pausa al salir, y con
+`prefers-reduced-motion` queda fijo en el resumen sin animar.
+El tap usa `animate-ping` de Tailwind; las transiciones entre escenas son
+opacity/translate con utilidades estándar. Se eliminó el CSS `.phone-screen`
+de index.css.

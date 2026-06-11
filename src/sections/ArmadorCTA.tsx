@@ -1,4 +1,5 @@
 import { Badge, Button, Drip, IconArrow } from "../shared/ui";
+import { PhoneShowcase } from "./PhoneShowcase";
 
 interface ArmadorCTAProps {
   onOpenArmador: () => void;
@@ -35,35 +36,29 @@ export function ArmadorCTA({ onOpenArmador }: ArmadorCTAProps) {
           </p>
         </div>
 
-        <div className="relative grid place-items-center h-[320px] min-[940px]:h-[400px]" data-reveal>
+        <div className="relative grid place-items-center h-[480px] min-[940px]:h-[700px]" data-reveal>
           <div
-            className="absolute w-[300px] h-[300px] rounded-full bg-white/12 shadow-[0_0_0_22px_rgb(255_255_255/0.07)]"
+            className="absolute w-[300px] h-[300px] min-[940px]:w-[380px] min-[940px]:h-[380px] rounded-full bg-white/12 shadow-[0_0_0_22px_rgb(255_255_255/0.07)]"
             aria-hidden="true"
           />
-          <img
-            className="relative z-2 w-[clamp(210px,58vw,290px)] drop-shadow-[0_20px_26px_rgb(0_0_0/0.22)] animate-floaty"
-            src="/assets/cup-fresas-con-crema.webp"
-            alt="Fresas con crema personalizadas"
-            width={768}
-            height={1152}
-            loading="lazy"
-            decoding="async"
-          />
+          <PhoneShowcase />
           {[
-            { label: "Oreo", pos: "top-[8%] left-[6%]", dur: "4s", delay: "0s" },
-            { label: "Masmelos", pos: "top-[8%] right-[6%]", dur: "4.3s", delay: ".2s" },
-            { label: "Arequipe", pos: "top-[44%] left-[0%]", dur: "4.6s", delay: ".6s" },
-            { label: "Durazno", pos: "top-[44%] right-[0%]", dur: "4.9s", delay: ".8s" },
-            { label: "Gansito", pos: "bottom-[10%] left-[10%]", dur: "5.2s", delay: "1s" },
-            { label: "Queso", pos: "bottom-[10%] right-[10%]", dur: "5.5s", delay: "1.2s" },
+            { img: "/assets/merengon.webp", className: "left-[2%] top-[8%] w-20 -rotate-12 min-[940px]:w-28", delay: "0s", duration: "5.5s" },
+            { img: "/assets/cup-duraznos.webp", className: "right-[4%] bottom-[12%] w-16 -rotate-6 min-[940px]:w-24", delay: "3s", duration: "5s" },
+            { img: "/assets/cup-fresas-con-crema.webp", className: "right-[3%] top-[6%] w-16 rotate-6 min-[940px]:w-24", delay: "1.2s", duration: "4.5s" },
+            { img: "/assets/oblea.webp", className: "left-[6%] bottom-[6%] w-18 rotate-12 min-[940px]:w-26", delay: "2s", duration: "6s" },
           ].map((c) => (
-            <span
-              key={c.label}
-              className={`absolute z-4 font-round font-extrabold text-[.92rem] text-coral-700 bg-white px-3.5 py-2 rounded-full shadow-fm-md animate-floaty ${c.pos}`}
-              style={{ animationDuration: c.dur, animationDelay: c.delay }}
-            >
-              {c.label}
-            </span>
+            <img
+              key={c.img}
+              src={c.img}
+              alt=""
+              aria-hidden="true"
+              width={780}
+              height={1170}
+              decoding="async"
+              className={`absolute z-4 object-contain select-none pointer-events-none drop-shadow-[0_10px_16px_rgb(0_0_0/0.22)] animate-floaty ${c.className}`}
+              style={{ animationDuration: c.duration, animationDelay: c.delay }}
+            />
           ))}
         </div>
       </div>
