@@ -16,8 +16,8 @@ interface DeliveryViewProps {
 }
 
 const PAGOS: { id: MetodoPago; nombre: string; icono: string }[] = [
-  { id: "efectivo", nombre: "Efectivo", icono: "💵" },
   { id: "transferencia", nombre: "Transferencia", icono: "📲" },
+  { id: "efectivo", nombre: "Efectivo", icono: "💵" },
   { id: "recoger-en-tienda", nombre: "Recoger en tienda", icono: "🏪" },
 ];
 
@@ -71,46 +71,8 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
       }
     >
       <p className="mb-5 text-cacao">
-        Solo nos falta dónde llevarlas. <b>No pedimos tu teléfono</b> — WhatsApp ya lo lleva. 🛵
+        Solo nos falta dónde llevarlas. <b>No pedimos tu teléfono</b> — WhatsApp ya te lleva al chat. 🛵
       </p>
-
-      {!recogeEnTienda && (
-        <>
-          <label className="block mb-4">
-            <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
-              Dirección{" "}
-              <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
-                obligatorio
-              </em>
-            </span>
-            <textarea
-              ref={addrRef}
-              className={cn(inputClasses, "resize-y min-h-24", addrError && "border-coral-700")}
-              value={entrega.direccion}
-              onChange={(e) => set("direccion", e.target.value)}
-              onBlur={() => setTouchedAddr(true)}
-              placeholder="Calle / carrera, número, barrio, casa o apto…"
-            />
-            {addrError && (
-              <span className="block mt-1 text-[.85rem] font-bold text-coral-700">
-                Necesitamos la dirección para el domicilio.
-              </span>
-            )}
-          </label>
-
-          <label className="block mb-4">
-            <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
-              Punto de referencia
-            </span>
-            <input
-              className={inputClasses}
-              value={entrega.referencia}
-              onChange={(e) => set("referencia", e.target.value)}
-              placeholder="Ej: portón verde, frente a la tienda…"
-            />
-          </label>
-        </>
-      )}
 
       <div className="mb-4">
         <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
@@ -150,6 +112,44 @@ export function DeliveryView({ items, entrega, setEntrega, onBack, onSubmit }: D
           })}
         </div>
       </div>
+
+      {!recogeEnTienda && (
+        <>
+          <label className="block mb-4">
+            <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
+              Dirección{" "}
+              <em className="not-italic font-bold text-[.78rem] text-white bg-coral rounded-full px-2 py-0.5">
+                obligatorio
+              </em>
+            </span>
+            <textarea
+              ref={addrRef}
+              className={cn(inputClasses, "resize-y min-h-24", addrError && "border-coral-700")}
+              value={entrega.direccion}
+              onChange={(e) => set("direccion", e.target.value)}
+              onBlur={() => setTouchedAddr(true)}
+              placeholder="Calle / carrera, número, barrio, casa o apto…"
+            />
+            {addrError && (
+              <span className="block mt-1 text-[.85rem] font-bold text-coral-700">
+                Necesitamos la dirección para el domicilio.
+              </span>
+            )}
+          </label>
+
+          <label className="block mb-4">
+            <span className="block font-round font-bold text-[.92rem] text-coral-700 mb-1.5">
+              Punto de referencia
+            </span>
+            <input
+              className={inputClasses}
+              value={entrega.referencia}
+              onChange={(e) => set("referencia", e.target.value)}
+              placeholder="Ej: portón verde, frente a la tienda…"
+            />
+          </label>
+        </>
+      )}
 
       {entrega.pago === "efectivo" && (
         <label className="block mb-4">
