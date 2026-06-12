@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/carlosqm-dev/dfruta-madre-landing/compare/v1.3.0...v1.4.0) (2026-06-12)
+
+
+### Features
+
+* **armador:** metodo de pago primero en datos de entrega y transferencia por defecto ([25b3554](https://github.com/carlosqm-dev/dfruta-madre-landing/commit/25b35546ba6a9ef78bc06a0fe6be0888d1376ff0))
+
 ## [1.3.0](https://github.com/carlosqm-dev/dfruta-madre-landing/compare/v1.2.1...v1.3.0) (2026-06-12)
 
 
