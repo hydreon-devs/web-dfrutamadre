@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/hydreon-devs/web-dfrutamadre/compare/v1.0.0...v1.1.0) (2026-06-14)
+
+
+### Features
+
+* se agrega componente de Vercel para analíitica de la web ([ebd0cb9](https://github.com/hydreon-devs/web-dfrutamadre/commit/ebd0cb9610ae53dc5655f52e0903915a41a3e0f1))
+
 ## 1.0.0 (2026-06-14)
 
 
