@@ -181,8 +181,8 @@ sequenceDiagram
 ### Instalación
 
 ```bash
-git clone https://github.com/carlosqm-dev/dfruta-madre-landing.git
-cd dfruta-madre-landing
+git clone https://github.com/hydreon-devs/web-dfrutamadre.git
+cd web-dfrutamadre
 npm install
 npm run dev
 ```
@@ -206,3 +206,4 @@ No hay variables de entorno: el número de WhatsApp y los datos de marca viven c
 
 - Commits con [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`…); el versionado y el `CHANGELOG.md` los gestiona release-please.
 - Convenciones de código, nombres y reglas de negocio completas: ver [`AGENTS.md`](./AGENTS.md).
+- Collaborators: Carlos Quiroz Muñoz -> [carlosqm-dev](https://github.com/carlosqm-dev/)
