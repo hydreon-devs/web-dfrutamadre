@@ -6,12 +6,12 @@
 export const BRAND = {
   nombre: "D'Fruta Madre",
   tagline: "Fresas con crema a domicilio en Girardota",
-  /** URL pública del sitio; cambiarla aquí y en index.html cuando haya dominio propio */
-  siteUrl: "https://dfrutamadre.vercel.app",
+  /** URL pública del sitio; cambiarla aquí y en index.html cuando haya dominio propio o se cambie */
+  siteUrl: "https://dfrutamadre.hydreon.com.co/",
   instagram: "fresas.de.girardota",
   instagramUrl: "https://instagram.com/fresas.de.girardota",
   telefonoDisplay: "+57 300 841 53 68",
-  telefonoIntl: "573234519204",
+  telefonoIntl: "573008415368",
   horario: "Martes a Domingo · 2:00 – 8:00 PM",
   cobertura: "Cobertura solo en Girardota",
   direccion: "Calle 10 N18-5, Girardota",
