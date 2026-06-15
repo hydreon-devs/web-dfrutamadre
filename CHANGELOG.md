@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/hydreon-devs/web-dfrutamadre/compare/v1.1.0...v1.2.0) (2026-06-15)
+
+
+### Features
+
+* confirma productos directos, describe configurables y muestra identidad en el wizard ([cdca4e4](https://github.com/hydreon-devs/web-dfrutamadre/commit/cdca4e4dcbdc12551f42ff9ba213d10533813bb0))
+
 ## [1.1.0](https://github.com/hydreon-devs/web-dfrutamadre/compare/v1.0.0...v1.1.0) (2026-06-14)
 
 
