@@ -1,5 +1,6 @@
 export * from "./icons";
 export { Button } from "./Button";
+export { ConfirmDialog } from "./ConfirmDialog";
 export { Badge } from "./Badge";
 export { Logo } from "./Logo";
 export { Stars } from "./Stars";

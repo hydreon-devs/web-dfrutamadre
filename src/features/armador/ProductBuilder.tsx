@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Producto, Seleccion } from "../../domain/builder/types";
 import { calcularPrecio } from "../../domain/builder/pricing";
+import { imgProducto } from "../../domain/menu";
 import { pasoCompleto, seleccionInicial } from "../../domain/builder/validation";
 import { formatPrecio } from "../../shared/lib/format";
 import { cn } from "../../shared/lib/cn";
@@ -102,8 +103,29 @@ export function ProductBuilder({ producto, initial, editMode, onBack, onSubmit }
         </div>
       </header>
 
+      {/* Identidad del producto: recuerda qué se está armando */}
+      <div className="container-fm max-w-[640px] pt-4">
+        <div className="flex items-center gap-3 bg-white rounded-card shadow-fm-sm px-3.5 py-2.5">
+          <div className="grid place-items-center w-12 h-12 flex-none bg-blush rounded-media overflow-hidden">
+            <img
+              src={imgProducto(producto.id)}
+              alt=""
+              className="w-[82%] h-[82%] object-contain drop-shadow-[0_4px_7px_rgb(200_70_95/0.18)]"
+            />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[.72rem] text-cacao-soft font-bold uppercase tracking-wide">
+              Estás armando
+            </p>
+            <h3 className="font-round font-extrabold text-cacao leading-tight truncate">
+              {producto.nombre}
+            </h3>
+          </div>
+        </div>
+      </div>
+
       {/* Cuerpo: una pregunta por pantalla */}
-      <main className="container-fm max-w-[640px] pt-6">
+      <main className="container-fm max-w-[640px] pt-5">
         <div key={paso.id} className="view-fade-enter">
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>

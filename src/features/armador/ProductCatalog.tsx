@@ -48,6 +48,9 @@ function ConfigurableRow({ producto, onArmar }: ConfigurableRowProps) {
             {producto.nombre}
           </h3>
           <p className="text-[.85rem] text-cacao-soft font-bold">Desde {formatPrecio(precioMin)}</p>
+          {producto.descripcion && (
+            <p className="text-[.8rem] text-cacao-soft leading-snug mt-1">{producto.descripcion}</p>
+          )}
         </div>
         <Button size="sm" onClick={onArmar} className="self-start mt-2">
           Armar <IconArrow />

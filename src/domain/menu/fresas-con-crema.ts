@@ -8,6 +8,7 @@ export const fresasConCrema: Producto = {
   id: "fresas-con-crema",
   nombre: "Fresas con crema",
   alias: "Fresas",
+  descripcion: "Incluye 2 toppings clásicos y 1 premium. Suma los que quieras.",
   pasos: [
     {
       id: "tamano",

@@ -52,6 +52,8 @@ export interface Producto {
   nombre: string;
   /** Nombre corto para resúmenes, ej. "Fresas" */
   alias?: string;
+  /** Descripción corta de lo que incluye, para el catálogo. */
+  descripcion?: string;
   pasos: Paso[];
 }
 

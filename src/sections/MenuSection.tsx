@@ -11,7 +11,7 @@ import type { Especial } from "../domain/menu";
 import type { PasoMulti, PasoSingle } from "../domain/builder/types";
 import { formatPrecio } from "../shared/lib/format";
 import { buildWaUrl } from "../shared/lib/whatsapp";
-import { Badge } from "../shared/ui";
+import { Badge, ConfirmDialog } from "../shared/ui";
 import { cn } from "../shared/lib/cn";
 
 const tamanos = fresasConCrema.pasos.find((p) => p.id === "tamano") as PasoSingle;
@@ -29,6 +29,7 @@ interface EspecialCardProps {
 
 function EspecialCard({ p, onArmarProducto, onAgregarDirecto }: EspecialCardProps) {
   const [aviso, setAviso] = useState(false);
+  const [confirmar, setConfirmar] = useState(false);
   const timerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(timerRef.current), []);
@@ -97,24 +98,35 @@ function EspecialCard({ p, onArmarProducto, onAgregarDirecto }: EspecialCardProp
 
   if (directo) {
     return (
-      <button
-        type="button"
-        onClick={() => {
-          onAgregarDirecto(directo.id);
-          mostrarAviso(2000);
-        }}
-        className={cn(cardClasses, "text-left")}
-      >
-        {contenido}
-        <span className="mt-3 font-round font-extrabold text-[.9rem] text-coral">
-          Agregar al pedido →
-        </span>
-        {aviso && (
-          <span className="absolute inset-x-2.5 bottom-2.5 z-3 bg-coral text-white text-[.85rem] font-bold rounded-media px-3 py-2.5 shadow-fm-md">
-            ¡Agregado al pedido! 🛒
+      <>
+        <button
+          type="button"
+          onClick={() => setConfirmar(true)}
+          className={cn(cardClasses, "text-left")}
+        >
+          {contenido}
+          <span className="mt-3 font-round font-extrabold text-[.9rem] text-coral">
+            Agregar al pedido →
           </span>
-        )}
-      </button>
+          {aviso && (
+            <span className="absolute inset-x-2.5 bottom-2.5 z-3 bg-coral text-white text-[.85rem] font-bold rounded-media px-3 py-2.5 shadow-fm-md">
+              ¡Agregado al pedido! 🛒
+            </span>
+          )}
+        </button>
+        <ConfirmDialog
+          open={confirmar}
+          imagen={p.img}
+          nombre={directo.nombre}
+          precio={directo.precio}
+          onCancel={() => setConfirmar(false)}
+          onConfirm={() => {
+            setConfirmar(false);
+            onAgregarDirecto(directo.id);
+            mostrarAviso(2000);
+          }}
+        />
+      </>
     );
   }
 

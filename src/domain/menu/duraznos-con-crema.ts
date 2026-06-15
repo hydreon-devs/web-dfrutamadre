@@ -9,6 +9,7 @@ export const duraznosConCrema: Producto = {
   id: "duraznos-con-crema",
   nombre: "Duraznos con crema",
   alias: "Duraznos",
+  descripcion: "Incluye 1 topping a elegir, clásico o premium.",
   pasos: [
     {
       id: "tamano",
